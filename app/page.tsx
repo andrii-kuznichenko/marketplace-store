@@ -1,9 +1,13 @@
-import React from 'react'
+import FeaturedProducts from '@/components/home/FeaturedProducts';
+import Hero from '@/components/home/Hero';
 
 function HomePage() {
   return (
-    <div>HomePage</div>
-  )
+    <>
+    <Hero />
+    <FeaturedProducts />
+    </>
+  );
 }
 
-export default HomePage
+export default HomePage;
