@@ -49,7 +49,7 @@ export function AnimatedHeading({
 
       <motion.span
         variants={badge}
-        className='bg-primary py-2 px-4 rounded-lg tracking-widest text-white'
+        className='py-2 px-4 rounded-lg tracking-widest bg-linear-to-br from-blue-500 via-violet-500 to-pink-500 bg-clip-text text-transparent ring-1 ring-violet-500/40'
       >
         {secondWord}
       </motion.span>

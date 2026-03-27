@@ -41,15 +41,15 @@ function ProductsGrid({ products }: { products: Product[] }) {
         return (
           <motion.div
             key={product.id}
-            className='group relative'
+            className='group relative h-full'
             variants={item}
           >
             <div className='absolute top-10 right-6 z-5'>
               <FavouriteToggleButton productId={productId} />
             </div>
             <Link href={`/products/${productId}`}>
-              <Card className='transform group-hover:shadow-sm transition-shadow duration-200'>
-                <CardContent className='p-4'>
+              <Card className='h-full transform group-hover:shadow-sm transition-shadow duration-200'>
+                <CardContent className='flex h-full flex-col p-4'>
                   <div className='relative aspect-2/3 overflow-hidden'>
                     <Image
                       src={image}
@@ -62,8 +62,8 @@ function ProductsGrid({ products }: { products: Product[] }) {
                       className='rounded w-full object-cover transform group-hover:scale-105 transition-transform duration-200'
                     />
                   </div>
-                  <div className='mt-4'>
-                    <h2 className='text-lg capitalize'>{name}</h2>
+                  <div className='mt-4 flex flex-1 flex-col'>
+                    <h2 className='min-h-[3.5rem] text-lg capitalize'>{name}</h2>
                     <p className='text-muted-foreground mt-2'>
                       {currencyAmount}
                     </p>

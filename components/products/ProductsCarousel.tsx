@@ -30,13 +30,13 @@ function ProductsCarousel({ products }: { products: Product[] }) {
   return (
     <Carousel className='w-full'>
       <motion.div variants={container} initial='hidden' animate='visible'>
-        <CarouselContent>
+        <CarouselContent className='overflow-visible'>
           {products.map((product) => {
             const { name, price, image } = product;
             const currencyAmount = formatCurrency(price);
 
             return (
-              <CarouselItem key={product.id} className='basis-1/2 lg:basis-1/3'>
+              <CarouselItem key={product.id} className='basis-4/5 sm:basis-1/2 lg:basis-1/3'>
                 <motion.div className='group relative h-full' variants={item}>
                   <div className='absolute top-10 right-6 z-10'>
                     <FavouriteToggleButton productId={product.id} />
@@ -55,7 +55,7 @@ function ProductsCarousel({ products }: { products: Product[] }) {
                           />
                         </div>
                         <div className='mt-4 flex flex-1 flex-col'>
-                          <h2 className='min-h-[3.5rem] text-lg capitalize'>
+                          <h2 className='min-h-14 text-lg capitalize'>
                             {name}
                           </h2>
                           <p className='text-muted-foreground mt-2'>{currencyAmount}</p>
@@ -69,8 +69,6 @@ function ProductsCarousel({ products }: { products: Product[] }) {
           })}
         </CarouselContent>
       </motion.div>
-      <CarouselPrevious />
-      <CarouselNext />
     </Carousel>
   );
 }
