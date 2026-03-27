@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Inter, Lora } from 'next/font/google';
+import { Geist, Geist_Mono, Inter, Lora, Roboto } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import Navbar from '@/components/navbar/Navbar';
@@ -8,7 +8,9 @@ import Providers from './providers';
 
 const loraHeading = Lora({ subsets: ['latin'], variable: '--font-heading' });
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-roboto-sans' });
+
+const roboto = Roboto({subsets: ['latin'], variable: '--font-sans'})
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -42,6 +44,7 @@ export default function RootLayout({
         'font-sans',
         inter.variable,
         loraHeading.variable,
+        roboto.variable
       )}
     >
       <body>

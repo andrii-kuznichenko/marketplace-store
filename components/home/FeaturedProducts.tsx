@@ -2,8 +2,10 @@ import { fetchFeaturedProducts } from '@/utils/actions';
 import React, { Suspense } from 'react';
 import EmptyList from '../global/EmptyList';
 import SectionTitle from '../global/SectionTitle';
-import ProductsGrid from '../products/ProductsGrid';
 import LoadingContainer from '../global/LoadingContainer';
+import ProductsCarousel from '../products/ProductsCarousel';
+import { motion } from 'motion/react';
+import { AnimatedHeading } from '../global/animation/AnimatedHeading';
 
 async function FeaturedProducts() {
   const products = await fetchFeaturedProducts();
@@ -11,10 +13,12 @@ async function FeaturedProducts() {
 
   return (
     <section className='pt-24'>
-      <SectionTitle text='featured products' />
-      <Suspense fallback={<LoadingContainer />}>
-        <ProductsGrid products={products} />
-      </Suspense>
+      <AnimatedHeading firstWord={'Our'} secondWord={'Choice'} />
+      <div className='mt-6'>
+        <Suspense fallback={<LoadingContainer />}>
+          <ProductsCarousel products={products} />
+        </Suspense>
+      </div>
     </section>
   );
 }

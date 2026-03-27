@@ -5,8 +5,8 @@ import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import SunIconAnimation from './SunIconAnimation';
-import MoonIconAnimation from './MoonIconAnimation';
+import SunIconAnimation from './animation/SunIconAnimation';
+import MoonIconAnimation from './animation/MoonIconAnimation';
 
 export default function ModeToggle() {
   const { resolvedTheme, setTheme } = useTheme();

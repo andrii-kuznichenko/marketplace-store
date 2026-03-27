@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import type { Product } from '@prisma/client';
 import { formatCurrency } from '@/utils/format';
@@ -5,17 +7,43 @@ import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
 import FavouriteToggleButton from './FavouriteToggleButton';
+import { motion } from 'motion/react';
 
 function ProductsGrid({ products }: { products: Product[] }) {
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.15,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className='pt-12 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+    <motion.div
+      variants={container}
+      initial='hidden'
+      animate='visible'
+      className='pt-12 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+    >
       {products.map((product) => {
         const { name, price, image } = product;
         const productId = product.id;
         const currencyAmount = formatCurrency(price);
 
         return (
-          <article key={product.id} className='group relative'>
+          <motion.div
+            key={product.id}
+            className='group relative'
+            variants={item}
+          >
             <div className='absolute top-10 right-6 z-5'>
               <FavouriteToggleButton productId={productId} />
             </div>
@@ -43,10 +71,10 @@ function ProductsGrid({ products }: { products: Product[] }) {
                 </CardContent>
               </Card>
             </Link>
-          </article>
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
 
