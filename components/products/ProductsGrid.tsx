@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import type { Product } from '@prisma/client';
@@ -60,10 +60,11 @@ function ProductsGrid({ products }: { products: Product[] }) {
                       }
                       priority
                       className='rounded w-full object-cover transform group-hover:scale-105 transition-transform duration-200'
+                      loading='eager'
                     />
                   </div>
                   <div className='mt-4 flex flex-1 flex-col'>
-                    <h2 className='min-h-[3.5rem] text-lg capitalize'>{name}</h2>
+                    <h2 className='min-h-14 text-lg capitalize'>{name}</h2>
                     <p className='text-muted-foreground mt-2'>
                       {currencyAmount}
                     </p>

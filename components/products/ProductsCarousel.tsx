@@ -18,7 +18,10 @@ import {
 
 const container = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { delayChildren: 0.15, staggerChildren: 0.1 } },
+  visible: {
+    opacity: 1,
+    transition: { delayChildren: 0.15, staggerChildren: 0.1 },
+  },
 };
 
 const item = {
@@ -36,7 +39,10 @@ function ProductsCarousel({ products }: { products: Product[] }) {
             const currencyAmount = formatCurrency(price);
 
             return (
-              <CarouselItem key={product.id} className='basis-4/5 sm:basis-1/2 lg:basis-1/3'>
+              <CarouselItem
+                key={product.id}
+                className='basis-4/5 sm:basis-1/2 lg:basis-1/3'
+              >
                 <motion.div className='group relative h-full' variants={item}>
                   <div className='absolute top-10 right-6 z-10'>
                     <FavouriteToggleButton productId={product.id} />
@@ -51,6 +57,7 @@ function ProductsCarousel({ products }: { products: Product[] }) {
                             fill
                             sizes='(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw'
                             priority
+                            loading='eager'
                             className='rounded object-cover group-hover:scale-105 transition-transform duration-200'
                           />
                         </div>
@@ -58,7 +65,9 @@ function ProductsCarousel({ products }: { products: Product[] }) {
                           <h2 className='min-h-14 text-lg capitalize'>
                             {name}
                           </h2>
-                          <p className='text-muted-foreground mt-2'>{currencyAmount}</p>
+                          <p className='text-muted-foreground mt-2'>
+                            {currencyAmount}
+                          </p>
                         </div>
                       </CardContent>
                     </Card>

@@ -16,7 +16,7 @@ async function ProductsContainer({
   layout: 'grid' | 'list' | 'carousel';
   search: string;
 }) {
-  const products = await fetchAllProducts();
+  const products = await fetchAllProducts({ search });
   const totalProducts = products.length;
   const searchTerms = search ? `&search=${search}` : '';
 
