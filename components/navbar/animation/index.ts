@@ -1,3 +1,2 @@
-export { default as NavHoverDropdown } from './NavHoverDropdown';
-export { default as NavMenuContent } from './NavMenuContent';
-export { default as NavMenuTrigger } from './NavMenuTrigger';
+export { default as MoonIconAnimation } from './MoonIconAnimation';
+export { default as SunIconAnimation } from './SunIconAnimation';
