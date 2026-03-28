@@ -1,11 +1,10 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 function ScrollRestoration() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -13,7 +12,7 @@ function ScrollRestoration() {
     }
 
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return null;
 }
