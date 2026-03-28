@@ -42,8 +42,9 @@ export function AnimatedHeading({
     <motion.h2
       variants={words}
       initial='hidden'
-      animate='visible'
-      className='flex flex-wrap gap-2 sm:gap-x-4 items-center justify-center text-2xl font-bold leading-none tracking-wide sm:text-5xl'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.6 }}
+      className='flex flex-wrap gap-2 sm:gap-x-4 items-center justify-center text-2xl font-light leading-none tracking-wide sm:text-5xl'
     >
       <motion.span variants={word}>{firstWord}</motion.span>
 

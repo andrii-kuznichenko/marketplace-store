@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/Container';
 import Providers from './providers';
+import NavbarWithReveal from '@/components/home/animated/NavbarWithReveal';
 
 const loraHeading = Lora({ subsets: ['latin'], variable: '--font-heading' });
 
@@ -49,8 +50,10 @@ export default function RootLayout({
     >
       <body>
         <Providers>
+          <NavbarWithReveal>
           <Navbar />
-          <Container className='py-20'>{children}</Container>
+          </NavbarWithReveal>
+          {children}
         </Providers>
       </body>
     </html>
