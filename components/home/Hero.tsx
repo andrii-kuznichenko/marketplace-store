@@ -42,11 +42,11 @@ export default Hero;
 
 function HeroText({ lines, visible }: { lines: string[]; visible: boolean }) {
   return (
-    <div className='relative z-1'>
+    <div className='relative z-1 w-full'>
       {lines.map((line, i) => (
         <div key={i} className='overflow-hidden leading-[1.05]'>
           <motion.p
-            className='m-0 text-9xl font-light tracking-[-0.03em] text-black dark:text-white whitespace-nowrap'
+            className='m-0 text-[clamp(3.5rem,14vw,9rem)] font-light tracking-[-0.05em] text-black dark:text-white'
             initial={{ y: '110%' }}
             animate={visible ? { y: '0%' } : { y: '110%' }}
             transition={{
