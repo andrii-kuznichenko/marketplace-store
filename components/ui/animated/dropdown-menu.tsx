@@ -155,7 +155,7 @@ function DropdownMenuContent({
           align={align}
           className={cn(
             `
-            z-50
+            z-[120]
             w-(--radix-dropdown-menu-trigger-width)
             min-w-32
             overflow-hidden
@@ -511,7 +511,7 @@ function DropdownMenuSubContent({
       data-slot='dropdown-menu-sub-content'
       className={cn(
         `
-        z-50
+        z-[120]
         min-w-32
         overflow-hidden
         p-1

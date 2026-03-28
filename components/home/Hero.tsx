@@ -1,12 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 
 const HERO_LINES = ['We create style', 'people choose', 'every day.'];
 
 export function Hero() {
   const [overlayDone, setOverlayDone] = useState(false);
+
+  useEffect(() => {
+    if (overlayDone) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [overlayDone]);
 
   const handleOverlayDone = () => {
     setOverlayDone(true);
