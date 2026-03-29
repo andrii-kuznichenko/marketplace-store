@@ -1,4 +1,5 @@
 import db from '@/utils/db';
+import { pageLinks } from '@/utils/links';
 import { redirect } from 'next/navigation';
 
 export const fetchFeaturedProducts = async () => {
@@ -30,6 +31,6 @@ export const fetchSingleProduct = async (productId: string) => {
       id: productId,
     },
   });
-  if (!product) redirect('/products');
+  if (!product) redirect(pageLinks.products);
   return product;
 };

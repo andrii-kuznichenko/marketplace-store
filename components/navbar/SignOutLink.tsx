@@ -4,6 +4,7 @@ import { SignOutButton } from '@clerk/nextjs';
 import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { pageLinks } from '@/utils/links';
 
 function SignOutLink() {
   const handleLogout = () => {
@@ -34,7 +35,7 @@ function SignOutLink() {
         onClick={handleLogout}
         asChild
       >
-        <Link href={'/'}>logout</Link>
+        <Link href={pageLinks.home}>logout</Link>
       </Button>
     </SignOutButton>
   );

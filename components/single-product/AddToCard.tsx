@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../ui/button';
 
-function AddtoCard({ productId }: { productId: string }) {
+function AddToCart({ productId }: { productId: string }) {
   return (
     <Button className='mt-8 capitalize' size={'lg'}>
-      add to card
+      add to cart
     </Button>
   );
 }
 
-export default AddtoCard;
+export default AddToCart;

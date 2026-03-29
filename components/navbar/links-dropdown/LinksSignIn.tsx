@@ -1,7 +1,7 @@
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/animated/dropdown-menu';
 import { links } from '@/utils/links';
 import { Show } from '@clerk/nextjs';
 import Link from 'next/link';

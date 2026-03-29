@@ -1,6 +1,6 @@
 import BreadCrumbs from '@/components/single-product/BreadCrumbs';
 import FavouriteToggleButton from '@/components/products/FavouriteToggleButton';
-import AddtoCard from '@/components/single-product/AddToCard';
+import AddToCart from '@/components/single-product/AddToCard';
 import ProductRating from '@/components/single-product/ProductRating';
 import { fetchSingleProduct } from '@/utils/actions';
 import { formatCurrency } from '@/utils/format';
@@ -42,7 +42,7 @@ async function SingleProductPage({
             {currencyAmount}
           </p>
           <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
-          <AddtoCard productId={id} />
+          <AddToCart productId={id} />
         </div>
       </div>
     </section>

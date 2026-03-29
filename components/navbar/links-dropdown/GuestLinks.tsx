@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/animated/dropdown-menu';
 import { publicLinks, authPromptLinks } from '@/utils/links';
 import { Show, SignInButton, SignUpButton } from '@clerk/nextjs';
 import Link from 'next/link';
 
-function LinksSignOut() {
+function GuestLinks() {
   return (
     <Show when='signed-out'>
       {publicLinks.map((link) => {
@@ -51,4 +51,4 @@ function LinksSignOut() {
   );
 }
 
-export default LinksSignOut;
+export default GuestLinks;

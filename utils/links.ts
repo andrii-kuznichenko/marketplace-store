@@ -6,7 +6,22 @@ import {
   CiCircleAlert,
   CiBookmark,
   CiBoxes,
+  CiCalculator1,
+  CiFilter,
+  CiCirclePlus,
 } from 'react-icons/ci';
+
+export const pageLinks = {
+  home: '/',
+  about: '/about',
+  products: '/products',
+  cart: '/cart',
+  favourites: '/favourites',
+  orders: '/orders',
+  adminSales: '/admin/sales',
+  adminProducts: '/admin/products',
+  adminCreateProduct: '/admin/products/create',
+} as const;
 
 type NavLink = {
   href: string;
@@ -15,22 +30,32 @@ type NavLink = {
 };
 
 export const links: NavLink[] = [
-  { href: '/', label: 'home', icon: CiHome },
-  { href: '/about', label: 'about', icon: CiCircleAlert },
-  { href: '/products', label: 'products', icon: CiBoxes },
-  { href: '/cart', label: 'cart', icon: CiShoppingCart },
-  { href: '/favourites', label: 'favorites', icon: CiBookmark },
-  { href: '/orders', label: 'orders', icon: CiBarcode },
+  { href: pageLinks.home, label: 'home', icon: CiHome },
+  { href: pageLinks.about, label: 'about', icon: CiCircleAlert },
+  { href: pageLinks.products, label: 'products', icon: CiFilter },
+  { href: pageLinks.cart, label: 'cart', icon: CiShoppingCart },
+  { href: pageLinks.favourites, label: 'favorites', icon: CiBookmark },
+  { href: pageLinks.orders, label: 'orders', icon: CiBarcode },
+];
+
+export const adminLinks: NavLink[] = [
+  { href: pageLinks.adminSales, label: 'sales', icon: CiCalculator1 },
+  { href: pageLinks.adminProducts, label: 'my products', icon: CiBoxes },
+  {
+    href: pageLinks.adminCreateProduct,
+    label: 'create product',
+    icon: CiCirclePlus,
+  },
 ];
 
 export const publicLinks: NavLink[] = [
-  { href: '/', label: 'home', icon: CiHome },
-  { href: '/about', label: 'about', icon: CiCircleAlert },
-  { href: '/products', label: 'products', icon: CiBoxes },
-  { href: '/cart', label: 'cart', icon: CiShoppingCart },
+  { href: pageLinks.home, label: 'home', icon: CiHome },
+  { href: pageLinks.about, label: 'about', icon: CiCircleAlert },
+  { href: pageLinks.products, label: 'products', icon: CiBoxes },
+  { href: pageLinks.cart, label: 'cart', icon: CiShoppingCart },
 ];
 
 export const authPromptLinks: Omit<NavLink, 'href'>[] = [
-  { label: 'favourites', icon: CiBookmark },
+  { label: 'favorites', icon: CiBookmark },
   { label: 'orders', icon: CiBarcode },
 ];

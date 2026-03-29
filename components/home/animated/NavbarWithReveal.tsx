@@ -3,10 +3,11 @@
 import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { pageLinks } from '@/utils/links';
 
 function NavbarWithReveal({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
+  const isHomePage = pathname === pageLinks.home;
   const [overlayFinished, setOverlayFinished] = useState(!isHomePage);
 
   useEffect(() => {

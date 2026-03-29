@@ -7,7 +7,7 @@ import { LuAlignLeft } from 'react-icons/lu';
 import { Button } from '../../ui/button';
 import UserIcon from '../UserIcon';
 import AnimatedPushButton from '../../global/animation/AnimatedPushButton';
-import LinksSignOut from './LinksSignOut';
+import GuestLinks from './GuestLinks';
 import LinksSignIn from './LinksSignIn';
 
 function LinksDropdown() {
@@ -24,7 +24,7 @@ function LinksDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-40' align='start' sideOffset={10}>
-        <LinksSignOut />
+        <GuestLinks />
         <LinksSignIn />
       </DropdownMenuContent>
     </DropdownMenu>

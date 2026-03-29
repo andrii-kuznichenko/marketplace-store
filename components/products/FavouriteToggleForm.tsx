@@ -1,9 +1,9 @@
 import React from 'react'
 
-function FavouriteToggleForm() {
+function FavoriteToggleForm() {
   return (
-    <div>FavouriteToggleForm</div>
+    <div>FavoriteToggleForm</div>
   )
 }
 
-export default FavouriteToggleForm
+export default FavoriteToggleForm

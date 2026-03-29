@@ -6,16 +6,17 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
+import { pageLinks } from '@/utils/links';
 
 function BreadCrumbs({ name }: { name: string }) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbLink href='/' className='text-lg capitalize'>
+        <BreadcrumbLink href={pageLinks.home} className='text-lg capitalize'>
           home
         </BreadcrumbLink>
         <BreadcrumbSeparator />
-        <BreadcrumbLink href='/products' className='text-lg capitalize'>
+        <BreadcrumbLink href={pageLinks.products} className='text-lg capitalize'>
           products
         </BreadcrumbLink>
         <BreadcrumbSeparator />
