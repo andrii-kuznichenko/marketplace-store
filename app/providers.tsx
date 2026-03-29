@@ -8,7 +8,6 @@ import { Toaster } from '@/components/ui/sonner';
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Toaster />
       <ScrollRestoration />
       <ThemeProvider
         attribute={'class'}
@@ -16,6 +15,7 @@ function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
+        <Toaster />
         {children}
       </ThemeProvider>
     </>
