@@ -56,7 +56,7 @@ export default Hero;
 
 function HeroText({ lines, visible }: { lines: string[]; visible: boolean }) {
   return (
-    <div className='relative z-1 w-full'>
+    <div className='relative z-1 w-fit'>
       {lines.map((line, i) => (
         <div key={i} className='overflow-hidden leading-[1.05]'>
           <motion.p

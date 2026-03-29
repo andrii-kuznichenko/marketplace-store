@@ -5,7 +5,6 @@ import CartButton from './CartButton';
 import DarkMode from './DarkMode';
 import LinksDropdown from './links-dropdown/LinksDropdown';
 import { Suspense } from 'react';
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 
 function Navbar() {
   return (
