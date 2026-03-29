@@ -5,6 +5,7 @@ import CartButton from './CartButton';
 import DarkMode from './DarkMode';
 import LinksDropdown from './LinksDropdown';
 import { Suspense } from 'react';
+import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 
 function Navbar() {
   return (
@@ -15,9 +16,12 @@ function Navbar() {
           <NavSearch />
         </Suspense>
         <div className='flex gap-4 items-center'>
-          <CartButton />
           <DarkMode />
+          <Show when='signed-in'>
+            <UserButton />
+          </Show>
           <LinksDropdown />
+          <CartButton />
         </div>
       </Container>
     </nav>

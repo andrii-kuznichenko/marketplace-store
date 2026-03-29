@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Inter, Lora, Roboto } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import Navbar from '@/components/navbar/Navbar';
-import Container from '@/components/global/Container';
+import { ClerkProvider } from '@clerk/nextjs';
 import Providers from './providers';
 import NavbarWithReveal from '@/components/home/animated/NavbarWithReveal';
 
@@ -11,7 +11,7 @@ const loraHeading = Lora({ subsets: ['latin'], variable: '--font-heading' });
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-roboto-sans' });
 
-const roboto = Roboto({subsets: ['latin'], variable: '--font-sans'})
+const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,28 +34,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang='en'
-      suppressHydrationWarning
-      className={cn(
-        'h-full',
-        'antialiased',
-        geistSans.variable,
-        geistMono.variable,
-        'font-sans',
-        inter.variable,
-        loraHeading.variable,
-        roboto.variable
-      )}
-    >
-      <body>
-        <Providers>
-          <NavbarWithReveal>
-          <Navbar />
-          </NavbarWithReveal>
-          {children}
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang='en'
+        suppressHydrationWarning
+        className={cn(
+          'h-full',
+          'antialiased',
+          geistSans.variable,
+          geistMono.variable,
+          'font-sans',
+          inter.variable,
+          loraHeading.variable,
+          roboto.variable,
+        )}
+      >
+        <body>
+          <Providers>
+            <NavbarWithReveal>
+              <Navbar />
+            </NavbarWithReveal>
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

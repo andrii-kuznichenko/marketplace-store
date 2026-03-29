@@ -11,8 +11,12 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import { links } from '@/utils/links';
 import { motion } from 'motion/react';
+import { Show, SignInButton, UserButton, useUser } from '@clerk/nextjs';
+import { useRef } from 'react';
 
 function LinksDropdown() {
+  const { user } = useUser();
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -42,9 +46,24 @@ function LinksDropdown() {
           );
         })}
         <DropdownMenuSeparator />
-        <Button variant='outline' className='w-full'>
-          Sign In
-        </Button>
+        <Show when='signed-out'>
+          <SignInButton>
+            <Button variant='outline' className='w-full'>
+              Sign In
+            </Button>
+          </SignInButton>
+        </Show>
+        {/* TODO SHOW USER INFO */}
+        {/* <Show when='signed-in'>
+          <div className='flex items-center gap-2'>
+            {user && (
+              <span className='text-xs'>
+                {user.firstName} {user.lastName}
+              </span>
+            )}
+            <UserButton />
+          </div>
+        </Show> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
