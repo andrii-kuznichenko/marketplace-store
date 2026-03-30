@@ -9,7 +9,7 @@ type Props = {
 
 export function OAuthButtons({ onSelect }: Props) {
   return (
-    <div className='mb-4 flex flex-col gap-3 sm:flex-row justify-around'>
+    <div className='mb-2 flex flex-col gap-3'>
       <Button variant='outline' onClick={() => onSelect('oauth_google')}>
         <FcGoogle />
         Continue with Google

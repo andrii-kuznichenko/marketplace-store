@@ -6,6 +6,7 @@ import Navbar from '@/components/navbar/Navbar';
 import { ClerkProvider } from '@clerk/nextjs';
 import Providers from './providers';
 import NavbarWithReveal from '@/components/home/animated/NavbarWithReveal';
+import { PropsWithChildren, ReactNode } from 'react';
 
 const loraHeading = Lora({ subsets: ['latin'], variable: '--font-heading' });
 
@@ -28,11 +29,13 @@ export const metadata: Metadata = {
   description: 'Store built with Next.js',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export type HomeLayoutProps = Readonly<
+  PropsWithChildren<{
+    modals: ReactNode;
+  }>
+>;
+
+export default function RootLayout({ children, modals }: HomeLayoutProps) {
   return (
     <ClerkProvider>
       <html
@@ -41,6 +44,7 @@ export default function RootLayout({
         className={cn(
           'h-full',
           'antialiased',
+          'font-sans',
           geistSans.variable,
           geistMono.variable,
           'font-sans',
@@ -54,6 +58,7 @@ export default function RootLayout({
             <NavbarWithReveal>
               <Navbar />
             </NavbarWithReveal>
+            {modals}
             {children}
           </Providers>
         </body>
