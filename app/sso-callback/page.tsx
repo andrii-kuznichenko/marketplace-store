@@ -16,12 +16,21 @@ export default function SSOCallback() {
       if (!clerk.loaded || hasRun.current) return;
       hasRun.current = true;
 
-      const navigate = async ({ session, decorateUrl }: any) => {
+      const navigate = async ({
+        session,
+        decorateUrl,
+      }: {
+        session?: { currentTask?: unknown } | null;
+        decorateUrl: (url: string) => string;
+      }) => {
         if (session?.currentTask) return;
         const url = decorateUrl('/');
-        url.startsWith('http')
-          ? (window.location.href = url)
-          : router.push(url);
+        if (url.startsWith('http')) {
+          window.location.href = url;
+          return;
+        }
+
+        router.push(url);
       };
 
       if (signIn.status === 'complete') {
@@ -41,10 +50,10 @@ export default function SSOCallback() {
         await signUp.create({ transfer: true });
         if (signUp.status === 'complete')
           return await signUp.finalize({ navigate });
-        return router.push('/sign-up');
+        return router.push('/signup');
       }
     })();
-  }, [clerk, signIn, signUp]);
+  }, [clerk, router, signIn, signUp]);
 
   return <div id='clerk-captcha' />;
 }

@@ -13,6 +13,8 @@ import {
 
 export const pageLinks = {
   home: '/',
+  signIn: '/sign-in',
+  signUp: '/signup',
   about: '/about',
   products: '/products',
   cart: '/cart',

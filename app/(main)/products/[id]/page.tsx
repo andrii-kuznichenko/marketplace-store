@@ -1,6 +1,6 @@
 import BreadCrumbs from '@/components/single-product/BreadCrumbs';
 import FavouriteToggleButton from '@/components/products/FavouriteToggleButton';
-import AddToCart from '@/components/single-product/AddToCard';
+import AddToCart from '@/components/single-product/AddToCart';
 import ProductRating from '@/components/single-product/ProductRating';
 import { fetchSingleProduct } from '@/utils/actions';
 import { formatCurrency } from '@/utils/format';
