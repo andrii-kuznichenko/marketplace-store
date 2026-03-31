@@ -33,6 +33,7 @@ const item = {
 
 function ProductsCarousel({ products }: { products: Product[] }) {
   return (
+    <div className='overflow-hidden'>
     <Carousel className='w-full'>
       <motion.div
         variants={container}
@@ -40,12 +41,12 @@ function ProductsCarousel({ products }: { products: Product[] }) {
         whileInView='visible'
         viewport={{ once: true, amount: 0.25 }}
       >
-        <CarouselContent className='overflow-visible'>
+        <CarouselContent viewportClassName='overflow-visible'>
           {products.map((product) => {
             return (
               <CarouselItem
                 key={product.id}
-                className='basis-4/5 sm:basis-1/2 lg:basis-1/3'
+                className='basis-4/5 sm:basis-[45%] lg:basis-[30%]'
               >
                 <motion.div className='group relative h-full' variants={item}>
                   <div className='absolute top-10 right-6 z-10'>
@@ -59,6 +60,7 @@ function ProductsCarousel({ products }: { products: Product[] }) {
         </CarouselContent>
       </motion.div>
     </Carousel>
+    </div>
   );
 }
 

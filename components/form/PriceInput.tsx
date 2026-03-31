@@ -16,10 +16,9 @@ function PriceInput({ defaultValue }: FormInputNumberProps) {
       </Label>
       <Input
         id={name}
-        type='number'
+        type='text'
+        inputMode='decimal'
         name={name}
-        min={0}
-        step={0.01}
         defaultValue={defaultValue || 100}
         required
       ></Input>
