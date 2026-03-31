@@ -12,6 +12,7 @@ import { SignInDialog } from '@/components/auth-form/SignInDialog';
 import AnimatedPushButton from '@/components/global/animation/AnimatedPushButton';
 import GuestLinks from './GuestLinks';
 import { LuAlignLeft } from 'react-icons/lu';
+import AdminLinks from './AdminLinks';
 
 type Props = {
   userIcon: ReactNode;
@@ -45,12 +46,15 @@ function LinksDropdownClient({ userIcon, signedInLinks }: Props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-40' align='start' sideOffset={10}>
+          <AdminLinks />
           <GuestLinks onOpenSignIn={handleOpenSignIn} />
           {signedInLinks}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {openSignIn && <SignInDialog open={openSignIn} onOpenChange={setOpenSignIn} />}
+      {openSignIn && (
+        <SignInDialog open={openSignIn} onOpenChange={setOpenSignIn} />
+      )}
     </>
   );
 }
