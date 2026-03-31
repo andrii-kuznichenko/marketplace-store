@@ -5,3 +5,5 @@ export const formatCurrency = (amount: number | null) => {
     currency: 'EUR',
   }).format(value);
 };
+
+export const currency = '€';

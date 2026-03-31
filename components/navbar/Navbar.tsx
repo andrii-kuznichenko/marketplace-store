@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 
 function Navbar() {
   return (
-    <nav className='border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80'>
+    <nav className='border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80'>
       <Container className='flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap py-8'>
         <Logo />
         <Suspense>
