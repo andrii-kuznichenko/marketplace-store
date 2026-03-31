@@ -14,7 +14,8 @@ const isPublicRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
   const { sessionClaims } = await auth();
-  const isAdminUser = sessionClaims?.metadata?.role === 'admin' || 'superadmin';
+  const role = sessionClaims?.metadata?.role;
+  const isAdminUser = role === 'admin' || role === 'superadmin';
 
   if (isAdminRoute(req) && !isAdminUser) {
     return NextResponse.redirect(new URL('/', req.url));
