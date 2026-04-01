@@ -1,4 +1,13 @@
 import { currentUser } from '@clerk/nextjs/server';
+import type { User } from '@clerk/nextjs/server';
+
+export type UserMetadata = {
+  role?: string;
+  companyId?: string;
+};
+
+export const getMetadata = (user: User): UserMetadata =>
+  user.publicMetadata as UserMetadata;
 
 export const getUserRole = async () => {
   const user = await currentUser();

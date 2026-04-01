@@ -7,8 +7,6 @@ type TextAreaInputProps = {
   defaultValue?: string;
 };
 
-import React from 'react';
-
 function TextAreaInput({ name, label, defaultValue }: TextAreaInputProps) {
   return (
     <div className='mb-2'>
