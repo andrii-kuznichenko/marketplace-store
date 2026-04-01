@@ -12,7 +12,7 @@ import React from 'react';
 function TextAreaInput({ name, label, defaultValue }: TextAreaInputProps) {
   return (
     <div className='mb-2'>
-      <Label htmlFor={name} className='capitalize'>
+      <Label htmlFor={name} className='capitalize mb-2'>
         {label || name}
       </Label>
       <Textarea
