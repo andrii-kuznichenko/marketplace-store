@@ -4,7 +4,8 @@ import db from '@/utils/db';
 import { pageLinks } from '@/utils/links';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-import { productSchema, validateWithZodSchema } from './schemas';
+import { imageSchema, productSchema, validateWithZodSchema } from './schemas';
+import { uploadImage } from './supabase';
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -60,32 +61,22 @@ export const createProductAction = async (
   const user = await getAuthUser();
   try {
     const rawData = Object.fromEntries(formData);
-    console.log('price raw:', rawData.price, typeof rawData.price);
+    const file = formData.get('image') as File;
     const validatedFields = validateWithZodSchema(productSchema, rawData);
-    console.log('price validated:', validatedFields.price, typeof validatedFields.price);
+    const validatedImageFile = validateWithZodSchema(imageSchema, {
+      image: file,
+    });
+    const fullPath = await uploadImage(validatedImageFile.image);
 
     await db.product.create({
       data: {
         ...validatedFields,
-        image: '/images/hero2.jpg',
+        image: fullPath,
         clerkId: user.id,
       },
     });
-
-    // await db.product.create({
-    //   data: {
-    //     name,
-    //     price,
-    //     company,
-    //     image: '/images/hero1.jpg',
-    //     description,
-    //     featured,
-    //     clerkId: user.id,
-    //   },
-    // });
-
-    return { message: 'Product created' };
   } catch (error) {
     return renderError(error);
-  }
+  } 
+  redirect(pageLinks.adminProducts);
 };
