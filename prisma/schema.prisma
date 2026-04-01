@@ -6,15 +6,46 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+model Company {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  admins    Admin[]
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  clerkId   String   @unique
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId String
+  createdAt DateTime @default(now())
+}
+
 model Product {
-  id          String   @id @default(uuid())
+  id          String         @id @default(uuid())
   name        String
-  company     String
   description String
   featured    Boolean
-  image       String
   price       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   clerkId     String
+  company     Company        @relation(fields: [companyId], references: [id])
+  companyId   String
+  media       ProductMedia[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ProductMedia {
+  id        String    @id @default(uuid())
+  url       String
+  type      MediaType
+  order     Int       @default(0)
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
 }

@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
-import { Product } from '@prisma/client';
+import { fetchAllProducts } from '@/utils/actions';
 import { formatCurrency } from '@/utils/format';
 import ProductRating from '../single-product/ProductRating';
 
+type Product = Awaited<ReturnType<typeof fetchAllProducts>>[number];
+
 function ProductVerticalCard({ product }: { product: Product }) {
-  const { id, name, price, image, company } = product;
+  const { id, name, price, media, company } = product;
+  const image = media[0]?.url ?? '';
   const currencyAmount = formatCurrency(price);
   return (
     <Link href={`/products/${id}`}>
@@ -25,7 +28,7 @@ function ProductVerticalCard({ product }: { product: Product }) {
           </div>
           <div className='mt-4 flex flex-1 flex-col'>
             <div className='flex justify-between mt-4 mb-1'>
-              <h2 className='font-light'>{company}</h2>
+              <h2 className='font-light'>{company.name}</h2>
               <ProductRating productId={product.id} isReviewShown={false} />
             </div>
             <h3 className='min-h-14 text-lg capitalize'>{name}</h3>

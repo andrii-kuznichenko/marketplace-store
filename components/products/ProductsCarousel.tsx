@@ -1,22 +1,16 @@
 'use client';
 
-import React from 'react';
-import type { Product } from '@prisma/client';
-import { formatCurrency } from '@/utils/format';
-import { Card, CardContent } from '../ui/card';
-import Image from 'next/image';
-import Link from 'next/link';
+import { fetchAllProducts } from '@/utils/actions';
 import FavouriteToggleButton from './FavouriteToggleButton';
 import { motion } from 'motion/react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel';
-import ProductRating from '../single-product/ProductRating';
 import ProductVerticalCard from './ProductVerticalCard';
+
+type Product = Awaited<ReturnType<typeof fetchAllProducts>>[number];
 
 const container = {
   hidden: { opacity: 0 },
@@ -34,32 +28,32 @@ const item = {
 function ProductsCarousel({ products }: { products: Product[] }) {
   return (
     <div className='overflow-hidden'>
-    <Carousel className='w-full'>
-      <motion.div
-        variants={container}
-        initial='hidden'
-        whileInView='visible'
-        viewport={{ once: true, amount: 0.25 }}
-      >
-        <CarouselContent viewportClassName='overflow-visible'>
-          {products.map((product) => {
-            return (
-              <CarouselItem
-                key={product.id}
-                className='basis-4/5 sm:basis-[45%] lg:basis-[30%]'
-              >
-                <motion.div className='group relative h-full' variants={item}>
-                  <div className='absolute top-10 right-6 z-10'>
-                    <FavouriteToggleButton productId={product.id} />
-                  </div>
-                  <ProductVerticalCard product={product} />
-                </motion.div>
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-      </motion.div>
-    </Carousel>
+      <Carousel className='w-full'>
+        <motion.div
+          variants={container}
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, amount: 0.25 }}
+        >
+          <CarouselContent viewportClassName='overflow-visible'>
+            {products.map((product) => {
+              return (
+                <CarouselItem
+                  key={product.id}
+                  className='basis-4/5 sm:basis-[45%] lg:basis-[30%]'
+                >
+                  <motion.div className='group relative h-full' variants={item}>
+                    <div className='absolute top-10 right-6 z-10'>
+                      <FavouriteToggleButton productId={product.id} />
+                    </div>
+                    <ProductVerticalCard product={product} />
+                  </motion.div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </motion.div>
+      </Carousel>
     </div>
   );
 }

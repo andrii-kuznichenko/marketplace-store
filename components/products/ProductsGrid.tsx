@@ -1,6 +1,8 @@
 'use client';
 
-import type { Product } from '@prisma/client';
+import { fetchAllProducts } from '@/utils/actions';
+
+type Product = Awaited<ReturnType<typeof fetchAllProducts>>[number];
 import FavouriteToggleButton from './FavouriteToggleButton';
 import { motion } from 'motion/react';
 import ProductVerticalCard from './ProductVerticalCard';

@@ -1,17 +1,21 @@
 import { SubmitButton } from '@/components/form/Buttons';
 import CheckBoxInput from '@/components/form/CheckBoxInput';
+import CompanySelect from '@/components/form/CompanySelect';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
+import VideoInput from '@/components/form/VideoInput';
 import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { createProductAction } from '@/utils/actions';
+import { isSuperAdmin } from '@/utils/roles';
 import { faker } from '@faker-js/faker';
 
-function CreateProductPage() {
+async function CreateProductPage() {
+  const superAdmin = await isSuperAdmin();
   const name = faker.commerce.productName();
-  const company = faker.company.name();
   const description = faker.lorem.paragraph({ min: 10, max: 12 });
+
   return (
     <section>
       <h1 className='text-2xl font-semibold mb-8 capitalize'>create product</h1>
@@ -24,14 +28,10 @@ function CreateProductPage() {
               label='product name'
               defaultValue={name}
             />
-            <FormInput
-              type='text'
-              name='company'
-              label='company'
-              defaultValue={company}
-            />
             <PriceInput />
+            {superAdmin && <CompanySelect />}
             <ImageInput />
+            <VideoInput />
           </div>
           <TextAreaInput
             name='description'

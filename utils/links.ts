@@ -9,6 +9,7 @@ import {
   CiCalculator1,
   CiFilter,
   CiCirclePlus,
+  CiBank,
 } from 'react-icons/ci';
 
 export const pageLinks = {
@@ -23,6 +24,7 @@ export const pageLinks = {
   adminSales: '/admin/sales',
   adminProducts: '/admin/products',
   adminCreateProduct: '/admin/products/create',
+  adminCreateCompany: '/admin/companies/create',
 } as const;
 
 type NavLink = {
@@ -43,11 +45,11 @@ export const links: NavLink[] = [
 export const adminLinks: NavLink[] = [
   { href: pageLinks.adminSales, label: 'sales', icon: CiCalculator1 },
   { href: pageLinks.adminProducts, label: 'my products', icon: CiBoxes },
-  {
-    href: pageLinks.adminCreateProduct,
-    label: 'create product',
-    icon: CiCirclePlus,
-  },
+  { href: pageLinks.adminCreateProduct, label: 'create product', icon: CiCirclePlus },
+];
+
+export const superAdminLinks: NavLink[] = [
+  { href: pageLinks.adminCreateCompany, label: 'create company', icon: CiBank },
 ];
 
 export const publicLinks: NavLink[] = [

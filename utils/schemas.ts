@@ -3,13 +3,8 @@ import { z, ZodType } from 'zod';
 export const productSchema = z.object({
   name: z
     .string()
-    .min(2, {
-      message: 'name must be at least 2 characters.',
-    })
-    .max(100, {
-      message: 'name must be less than 100 characters',
-    }),
-  company: z.string(),
+    .min(2, { message: 'name must be at least 2 characters.' })
+    .max(100, { message: 'name must be less than 100 characters' }),
   price: z
     .string()
     .transform((val) => parseFloat(val.replace(',', '.')))
@@ -19,31 +14,30 @@ export const productSchema = z.object({
       const wordCount = description.split(' ').length;
       return wordCount >= 10 && wordCount <= 1000;
     },
-    {
-      message: 'description must be between 10 and 1000 words.',
-    },
+    { message: 'description must be between 10 and 1000 words.' },
   ),
   featured: z.coerce.boolean(),
 });
 
-export const imageSchema = z.object({
-  image: validateImageFile(),
+export const imagesSchema = z.object({
+  images: z
+    .array(
+      z
+        .instanceof(File)
+        .refine((file) => file.size <= 1024 * 1024, 'Each image must be less than 1MB')
+        .refine((file) => file.type.startsWith('image/'), 'File must be an image'),
+    )
+    .min(1, 'At least one image is required')
+    .max(5, 'Maximum 5 images allowed'),
 });
 
-function validateImageFile() {
-  const maxUploadSize = 1024 * 1024;
-  const acceptedFileTypes = ['image/'];
-  return z
+export const videoSchema = z.object({
+  video: z
     .instanceof(File)
-    .refine((file) => {
-      return !file || file.size <= maxUploadSize;
-    }, 'File size must be less then 1MB')
-    .refine((file) => {
-      return (
-        !file || acceptedFileTypes.some((type) => file.type.startsWith(type))
-      );
-    }, 'File must be an image');
-}
+    .refine((file) => file.size <= 10 * 1024 * 1024, 'Video must be less than 10MB')
+    .refine((file) => file.type.startsWith('video/'), 'File must be a video')
+    .optional(),
+});
 
 export function validateWithZodSchema<T>(schema: ZodType<T>, data: unknown): T {
   const result = schema.safeParse(data);

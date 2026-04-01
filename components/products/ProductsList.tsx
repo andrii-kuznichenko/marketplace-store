@@ -1,15 +1,18 @@
-import type { Product } from '@prisma/client';
 import { formatCurrency } from '@/utils/format';
+import { fetchAllProducts } from '@/utils/actions';
 import { Card, CardContent } from '../ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
 import FavouriteToggleButton from './FavouriteToggleButton';
 
+type Product = Awaited<ReturnType<typeof fetchAllProducts>>[number];
+
 function ProductsList({ products }: { products: Product[] }) {
   return (
     <div className='mt-12 grid gap-y-8'>
       {products.map((product) => {
-        const { name, price, image, company } = product;
+        const { name, price, media, company } = product;
+        const image = media[0]?.url ?? '';
         const currencyAmount = formatCurrency(price);
         const productId = product.id;
         return (
@@ -30,7 +33,7 @@ function ProductsList({ products }: { products: Product[] }) {
                   </div>
                   <div>
                     <h2 className='text-xl font-semibold capitalize'>{name}</h2>
-                    <h4 className='text-muted-foreground'>{company}</h4>
+                    <h4 className='text-muted-foreground'>{company.name}</h4>
                   </div>
                   <p className='text-muted-foreground text-lg md:ml-auto'>
                     {currencyAmount}
