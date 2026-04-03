@@ -4,10 +4,10 @@ import { toast } from 'sonner';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 
-function ImageInput() {
+function ImageInput({ single = false }: { single?: boolean }) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    if (files.length > 5) {
+    if (!single && files.length > 5) {
       toast.error('Maximum 5 images allowed');
       e.target.value = '';
       return;
@@ -22,15 +22,18 @@ function ImageInput() {
   return (
     <div className='mb-2'>
       <Label htmlFor='images' className='capitalize mb-2'>
-        Images <span className='text-muted-foreground text-xs'>(up to 5, max 1MB each)</span>
+        {single ? 'New image' : 'Images'}
+        <span className='text-muted-foreground text-xs ml-1'>
+          {single ? '(max 1MB)' : '(up to 5, max 1MB each)'}
+        </span>
       </Label>
       <Input
         id='images'
-        name='images'
+        name='image'
         type='file'
         required
         accept='image/*'
-        multiple
+        {...(!single && { multiple: true, name: 'images' })}
         onChange={handleFileChange}
       />
     </div>

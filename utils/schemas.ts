@@ -19,6 +19,14 @@ export const productSchema = z.object({
   featured: z.coerce.boolean(),
 });
 
+export const companySchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'name must be at least 2 characters.' })
+    .max(100, { message: 'name must be less than 100 characters.' }),
+  clerkUserId: z.string().min(1, { message: 'Clerk User ID is required.' }),
+});
+
 export const imagesSchema = z.object({
   images: z
     .array(

@@ -6,6 +6,7 @@ import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import { MediaType } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import {
+  companySchema,
   imagesSchema,
   productSchema,
   validateWithZodSchema,
@@ -165,11 +166,8 @@ export const createCompanyAction = async (
   try {
     await getSuperAdminUser();
 
-    const name = formData.get('name') as string;
-    const clerkUserId = formData.get('clerkUserId') as string;
-
-    if (!name || !clerkUserId)
-      throw new Error('Name and Clerk User ID are required');
+    const rawData = Object.fromEntries(formData);
+    const { name, clerkUserId } = validateWithZodSchema(companySchema, rawData);
 
     const company = await db.company.create({ data: { name } });
     await db.admin.create({
@@ -215,9 +213,201 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
       await deleteFiles(product.media.map((m) => m.url));
     }
 
-    revalidatePath('/admin/products');
+    revalidatePath(pageLinks.adminProducts);
     return { message: 'product removed' };
   } catch (error) {
     return renderError(error);
   }
+};
+
+export const fetchAdminProductDetails = async (productId: string) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const product = await db.product.findUnique({
+    where: {
+      id: productId,
+      ...(role !== 'superadmin' && { companyId }),
+    },
+    include: { media: { orderBy: { order: 'asc' } } },
+  });
+  if (!product) redirect(pageLinks.adminProducts);
+  return product;
+};
+
+export const updateProductAction = async (
+  preState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('id') as string;
+  try {
+    const rawData = Object.fromEntries(formData);
+    const validatedFields = validateWithZodSchema(productSchema, rawData);
+
+    await db.product.update({
+      where: {
+        id: productId,
+        ...(role !== 'superadmin' && { companyId }),
+      },
+      data: { ...validatedFields },
+    });
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
+};
+export const deleteProductFilesAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('productId') as string;
+  try {
+    const id = formData.get('id') as string;
+
+    const media = await db.productMedia.findUnique({
+      where: { id },
+      include: { product: true },
+    });
+    if (!media) throw new Error('Media not found');
+    if (role !== 'superadmin' && media.product.companyId !== companyId) {
+      throw new Error('Unauthorized');
+    }
+
+    await deleteFiles([media.url]);
+    await db.productMedia.delete({ where: { id } });
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
+};
+
+export const updateProductFilesAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('productId') as string;
+  try {
+    const id = formData.get('id') as string;
+    const imageFile = formData.get('image') as File | null;
+    const videoFile = formData.get('video') as File | null;
+    const newFile = imageFile?.size ? imageFile : videoFile?.size ? videoFile : null;
+    if (!newFile) throw new Error('No file provided');
+
+    const media = await db.productMedia.findUnique({
+      where: { id },
+      include: { product: true },
+    });
+    if (!media) throw new Error('Media not found');
+    if (role !== 'superadmin' && media.product.companyId !== companyId) {
+      throw new Error('Unauthorized');
+    }
+
+    await deleteFiles([media.url]);
+    const newUrl = await uploadFile(newFile);
+    await db.productMedia.update({ where: { id }, data: { url: newUrl } });
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
+};
+
+export const addProductImagesAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('productId') as string;
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id: productId,
+        ...(role !== 'superadmin' && { companyId }),
+      },
+    });
+    if (!product) throw new Error('Product not found');
+
+    const imageFiles = formData.getAll('images') as File[];
+    const { images } = validateWithZodSchema(imagesSchema, { images: imageFiles });
+
+    const imageUrls = await Promise.all(images.map((img) => uploadFile(img)));
+
+    await db.productMedia.createMany({
+      data: imageUrls.map((url) => ({ url, type: MediaType.IMAGE, productId })),
+    });
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
+};
+
+export const addProductVideoAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('productId') as string;
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id: productId,
+        ...(role !== 'superadmin' && { companyId }),
+      },
+    });
+    if (!product) throw new Error('Product not found');
+
+    const videoFile = formData.get('video') as File | null;
+    if (!videoFile?.size) throw new Error('No video provided');
+    validateWithZodSchema(videoSchema, { video: videoFile });
+
+    const videoUrl = await uploadFile(videoFile);
+    await db.productMedia.create({
+      data: { url: videoUrl, type: MediaType.VIDEO, productId },
+    });
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
+};
+
+export const reorderProductMediaAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  const productId = formData.get('productId') as string;
+  try {
+    const orderJson = formData.get('order') as string;
+    const order: { id: string; order: number }[] = JSON.parse(orderJson);
+
+    const product = await db.product.findUnique({
+      where: {
+        id: productId,
+        ...(role !== 'superadmin' && { companyId }),
+      },
+    });
+    if (!product) throw new Error('Product not found');
+
+    await db.$transaction(
+      order.map(({ id, order: newOrder }) =>
+        db.productMedia.update({ where: { id }, data: { order: newOrder } }),
+      ),
+    );
+  } catch (error) {
+    return renderError(error);
+  }
+  revalidatePath(`${pageLinks.adminProducts}/${productId}/edit`);
+  redirect(`${pageLinks.adminProducts}/${productId}/edit`);
 };

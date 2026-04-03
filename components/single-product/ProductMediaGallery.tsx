@@ -77,7 +77,7 @@ function ProductMediaGallery({ media, name }: { media: MediaItem[]; name: string
               <div
                 className='absolute inset-0 pointer-events-none'
                 style={{
-                  backgroundImage: `url(${active.url})`,
+                  backgroundImage: `url("${active.url}")`,
                   backgroundSize: '250%',
                   backgroundPosition: `${zoom.x}% ${zoom.y}%`,
                   backgroundRepeat: 'no-repeat',
