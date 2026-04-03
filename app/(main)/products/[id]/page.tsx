@@ -3,6 +3,9 @@ import FavouriteToggleButton from '@/components/products/FavouriteToggleButton';
 import AddToCart from '@/components/single-product/AddToCart';
 import ProductRating from '@/components/single-product/ProductRating';
 import ProductMediaGallery from '@/components/single-product/ProductMediaGallery';
+import ColorVariantSelector from '@/components/single-product/ColorVariantSelector';
+import SizeSelector from '@/components/single-product/SizeSelector';
+import ProductDetails from '@/components/single-product/ProductDetails';
 import { fetchSingleProduct } from '@/utils/actions';
 import { formatCurrency } from '@/utils/format';
 
@@ -13,8 +16,10 @@ async function SingleProductPage({
 }) {
   const { id } = await params;
   const product = await fetchSingleProduct(id);
-  const { name, description, price, media, company } = product;
+  const { name, description, price, media, company, sizes, customFields, colorGroup } = product;
   const currencyAmount = formatCurrency(price);
+
+  const colorVariants = colorGroup?.products ?? [];
 
   return (
     <section>
@@ -32,7 +37,14 @@ async function SingleProductPage({
             {currencyAmount}
           </p>
           <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
+
+          <ColorVariantSelector variants={colorVariants} currentProductId={id} />
+
+          <SizeSelector sizes={sizes} />
+
           <AddToCart productId={id} />
+
+          <ProductDetails fields={customFields} />
         </div>
       </div>
     </section>

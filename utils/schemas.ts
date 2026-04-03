@@ -1,4 +1,5 @@
 import { z, ZodType } from 'zod';
+import { Gender, MainCategory, Subcategory } from '@prisma/client';
 
 export const productSchema = z.object({
   name: z
@@ -17,6 +18,13 @@ export const productSchema = z.object({
     { message: 'description must be between 10 and 1000 words.' },
   ),
   featured: z.coerce.boolean(),
+  gender: z.enum(Gender, { message: 'Gender is required' }),
+  mainCategory: z.enum(MainCategory, { message: 'Category is required' }),
+  subcategory: z.enum(Subcategory, { message: 'Subcategory is required' }),
+  color: z.preprocess(
+    (val) => (val === '' ? undefined : val),
+    z.string().optional(),
+  ),
 });
 
 export const companySchema = z.object({

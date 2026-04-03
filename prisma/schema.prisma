@@ -11,6 +11,48 @@ enum MediaType {
   VIDEO
 }
 
+enum Gender {
+  MEN
+  WOMEN
+}
+
+enum MainCategory {
+  TOPS
+  BOTTOMS
+  DRESSES
+  OUTERWEAR
+  ACCESSORIES
+}
+
+enum Subcategory {
+  // Tops
+  T_SHIRTS
+  SHIRTS
+  BLOUSES
+  SWEATSHIRTS
+  HOODIES
+  TANK_TOPS
+  CROP_TOPS
+  // Bottoms
+  JEANS
+  TROUSERS
+  SHORTS
+  SKIRTS
+  JOGGERS
+  // Outerwear
+  JACKETS
+  COATS
+  BLAZERS
+  VESTS
+  // Accessories
+  BAGS
+  HATS
+  SCARVES
+  BELTS
+  JEWELRY
+  CHAINMAIL_PIECES
+}
+
 model Company {
   id        String    @id @default(uuid())
   name      String    @unique
@@ -27,18 +69,48 @@ model Admin {
   createdAt DateTime @default(now())
 }
 
+model ColorGroup {
+  id        String    @id @default(uuid())
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
 model Product {
-  id          String         @id @default(uuid())
-  name        String
-  description String
-  featured    Boolean
-  price       Float
-  clerkId     String
-  company     Company        @relation(fields: [companyId], references: [id])
-  companyId   String
-  media       ProductMedia[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id           String               @id @default(uuid())
+  name         String
+  description  String
+  featured     Boolean
+  price        Float
+  clerkId      String
+  company      Company              @relation(fields: [companyId], references: [id])
+  companyId    String
+  media        ProductMedia[]
+  gender       Gender
+  mainCategory MainCategory
+  subcategory  Subcategory
+  color        String?
+  colorGroup   ColorGroup?          @relation(fields: [colorGroupId], references: [id])
+  colorGroupId String?
+  sizes        ProductSize[]
+  customFields ProductCustomField[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+model ProductSize {
+  id        String  @id @default(uuid())
+  size      String
+  inStock   Boolean @default(true)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model ProductCustomField {
+  id        String  @id @default(uuid())
+  name      String
+  value     String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
 }
 
 model ProductMedia {

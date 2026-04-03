@@ -39,8 +39,8 @@ function FileInputContainer({
   addImagesAction,
   addVideoAction,
 }: FileInputContainerProps) {
-  const videos = media.filter((m) => m.type === MediaType.VIDEO);
-  const initialImages = media.filter((m) => m.type === MediaType.IMAGE);
+  const videos = media.filter((media) => media.type === MediaType.VIDEO);
+  const initialImages = media.filter((media) => media.type === MediaType.IMAGE);
 
   const [orderedImages, setOrderedImages] = useState(initialImages);
   const [draggedId, setDraggedId] = useState<string | null>(null);

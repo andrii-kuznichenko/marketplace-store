@@ -14,6 +14,8 @@ import { pageLinks } from '@/utils/links';
 import { formatCurrency } from '@/utils/format';
 import { IconButton } from '@/components/form/Buttons';
 import FormContainer from '@/components/form/FormContainer';
+import { Button } from '@/components/ui/button';
+import { PiPaletteThin } from "react-icons/pi";
 
 async function AdminProductsPage() {
   const items = await fetchAdminProducts();
@@ -28,6 +30,7 @@ async function AdminProductsPage() {
         <TableHeader>
           <TableRow>
             <TableHead>Product Name</TableHead>
+            <TableHead>Color</TableHead>
             <TableHead>Company</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Actions</TableHead>
@@ -35,7 +38,7 @@ async function AdminProductsPage() {
         </TableHeader>
         <TableBody>
           {items.map((item) => {
-            const { id: productId, name, company, price } = item;
+            const { id: productId, name, company, price, color } = item;
             return (
               <TableRow key={productId}>
                 <TableCell>
@@ -46,11 +49,17 @@ async function AdminProductsPage() {
                     {name}
                   </Link>
                 </TableCell>
+                <TableCell>{color ?? '—'}</TableCell>
                 <TableCell>{company.name}</TableCell>
                 <TableCell>{formatCurrency(price)}</TableCell>
                 <TableCell className='flex items-center gap-x-2'>
                   <Link href={`${pageLinks.adminProducts}/${productId}/edit`}>
                     <IconButton actionType='edit' />
+                  </Link>
+                  <Link href={`${pageLinks.adminProducts}/create?variantOf=${productId}`}>
+                    <Button size='icon' variant='link' className='p-2 cursor-pointer' title='Add color variant'>
+                      <PiPaletteThin />
+                    </Button>
                   </Link>
                   <DeleteProduct productId={productId} />
                 </TableCell>
