@@ -11,8 +11,9 @@ import {
   validateWithZodSchema,
   videoSchema,
 } from './schemas';
-import { uploadFile } from './supabase';
+import { deleteFiles, uploadFile } from './supabase';
 import { getMetadata } from './roles';
+import { revalidatePath } from 'next/cache';
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -195,4 +196,28 @@ export const fetchAdminProducts = async () => {
     include: { company: true },
     orderBy: { createdAt: 'desc' },
   });
+};
+
+export const deleteProductAction = async (prevState: { productId: string }) => {
+  const { productId } = prevState;
+  const user = await getAdminUser();
+  const { role, companyId } = getMetadata(user);
+  try {
+    const product = await db.product.delete({
+      where: {
+        id: productId,
+        ...(role !== 'superadmin' && { companyId }),
+      },
+      include: { media: true },
+    });
+
+    if (product.media.length > 0) {
+      await deleteFiles(product.media.map((m) => m.url));
+    }
+
+    revalidatePath('/admin/products');
+    return { message: 'product removed' };
+  } catch (error) {
+    return renderError(error);
+  }
 };

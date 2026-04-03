@@ -17,3 +17,11 @@ export const uploadFile = async (file: File) => {
 
   return supabase.storage.from(bucket).getPublicUrl(newName).data.publicUrl;
 };
+
+export const deleteFiles = async (urls: string[]) => {
+  const paths = urls
+    .map((url) => decodeURIComponent(url.split(`${bucket}/`)[1]))
+    .filter(Boolean) as string[];
+  if (paths.length === 0) throw new Error('No valid file paths');
+  return supabase.storage.from(bucket).remove(paths);
+};
