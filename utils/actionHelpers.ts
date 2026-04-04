@@ -1,5 +1,3 @@
-'use server';
-
 import { getMetadata } from './roles';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
