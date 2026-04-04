@@ -9,6 +9,7 @@ import { PiPaletteThin } from 'react-icons/pi';
 import { SignInDialog } from '../auth-form/SignInDialog';
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -74,6 +75,7 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
 
 export const CardSignInButton = () => {
   const [openSignIn, setOpenSignIn] = useState(false);
+  const { theme } = useTheme();
 
   return (
     <>
@@ -81,7 +83,7 @@ export const CardSignInButton = () => {
         type='button'
         size='icon'
         variant='outline'
-        className='p-2 cursor-pointer'
+        className='p-2 cursor-pointer bg-amber-700'
         onClick={() => setOpenSignIn(true)}
         asChild
       >
@@ -96,11 +98,12 @@ export const CardSignInButton = () => {
 
 export const CardSubmitButton = ({ isFavourite }: { isFavourite: boolean }) => {
   const { pending } = useFormStatus();
+  const { resolvedTheme } = useTheme();
   return (
     <Button
       type='submit'
       size='icon'
-      variant='outline'
+      variant={resolvedTheme === 'dark' ? 'default' : 'outline'}
       className='p-2 cursor-pointer'
     >
       {pending ? (

@@ -11,15 +11,21 @@ import {
 } from 'react-share';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
+import { useTheme } from 'next-themes';
 
 function ShareButton({ productId, name }: { productId: string; name: string }) {
   const url = process.env.NEXT_PUBLIC_WEBSITE_URL;
   const shareLink = `${url}/products/${productId}`;
+  const { resolvedTheme } = useTheme();
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline' size='icon' className='p-2'>
+        <Button
+          variant={resolvedTheme === 'dark' ? 'default' : 'outline'}
+          size='icon'
+          className='p-2'
+        >
           <IoShareSocial />
         </Button>
       </PopoverTrigger>
