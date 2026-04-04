@@ -1,7 +1,7 @@
 import { SubmitButton } from '@/components/form/Buttons';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
-import { createCompanyAction } from '@/utils/actions';
+import { createCompanyAction } from '@/utils/actions/companyActions';
 import { isSuperAdmin } from '@/utils/roles';
 import { redirect } from 'next/navigation';
 

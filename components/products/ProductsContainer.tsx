@@ -1,4 +1,4 @@
-import { fetchAllProducts } from '@/utils/actions';
+import { fetchAllProducts } from '@/utils/actions/productActions';
 import { FiGrid } from 'react-icons/fi';
 import { FaListUl } from 'react-icons/fa';
 import ProductsGrid from './ProductsGrid';
@@ -6,7 +6,8 @@ import ProductsList from './ProductsList';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
-import { LiquidToggleGroup, LiquidToggleItem } from './animation';
+import LiquidToggleGroup from './animation/LiquidToggleGroup';
+import LiquidToggleItem from './animation/LiquidToggleItem';
 import ProductsCarousel from './ProductsCarousel';
 
 async function ProductsContainer({
@@ -43,7 +44,6 @@ async function ProductsContainer({
 
   return (
     <>
-      {/* HEADER */}
       <section>
         <div className='flex justify-between items-end'>
           <p className='font-medium text-xs opacity-70'>
@@ -78,7 +78,6 @@ async function ProductsContainer({
         </div>
       </section>
       <Separator className='mt-3' />
-      {/* PRODUCTS */}
       <div>{content}</div>
     </>
   );

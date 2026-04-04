@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
-import { fetchAllProducts } from '@/utils/actions';
+import { fetchAllProducts } from '@/utils/actions/productActions';
 import { formatCurrency } from '@/utils/format';
 import ProductRating from '../single-product/ProductRating';
 

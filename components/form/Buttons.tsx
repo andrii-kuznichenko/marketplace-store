@@ -4,7 +4,11 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { ReloadIcon } from '@radix-ui/react-icons';
-import { CiEdit, CiEraser } from "react-icons/ci";
+import { CiEdit, CiEraser } from 'react-icons/ci';
+import { PiPaletteThin } from 'react-icons/pi';
+import { SignInDialog } from '../auth-form/SignInDialog';
+import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
+import { useState } from 'react';
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -38,7 +42,7 @@ export function SubmitButton({
   );
 }
 
-type actionType = 'edit' | 'delete';
+type actionType = 'edit' | 'delete' | 'color';
 
 export const IconButton = ({ actionType }: { actionType: actionType }) => {
   const { pending } = useFormStatus();
@@ -49,9 +53,11 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
         return <CiEdit />;
       case 'delete':
         return <CiEraser />;
+      case 'color':
+        return <PiPaletteThin />;
       default:
         const never: never = actionType;
-        throw new Error(`Invalid action type: ${never}`)
+        throw new Error(`Invalid action type: ${never}`);
     }
   };
   return (
@@ -59,9 +65,51 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
       type='submit'
       size='icon'
       variant='link'
-      className='p-2 cursor-pointer'
+      className='p-2 cursor-pointer dark:text-white'
     >
       {pending ? <ReloadIcon className='animate-spin' /> : renderIcon()}
+    </Button>
+  );
+};
+
+export const CardSignInButton = () => {
+  const [openSignIn, setOpenSignIn] = useState(false);
+
+  return (
+    <>
+      <Button
+        type='button'
+        size='icon'
+        variant='outline'
+        className='p-2 cursor-pointer'
+        onClick={() => setOpenSignIn(true)}
+        asChild
+      >
+        <IoIosHeartEmpty />
+      </Button>
+      {openSignIn && (
+        <SignInDialog open={openSignIn} onOpenChange={setOpenSignIn} />
+      )}
+    </>
+  );
+};
+
+export const CardSubmitButton = ({ isFavourite }: { isFavourite: boolean }) => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      type='submit'
+      size='icon'
+      variant='outline'
+      className='p-2 cursor-pointer'
+    >
+      {pending ? (
+        <ReloadIcon className='animate-spin' />
+      ) : isFavourite ? (
+        <IoIosHeart />
+      ) : (
+        <IoIosHeartEmpty />
+      )}
     </Button>
   );
 };

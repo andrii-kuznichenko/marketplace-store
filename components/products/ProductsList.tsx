@@ -1,5 +1,5 @@
 import { formatCurrency } from '@/utils/format';
-import { fetchAllProducts } from '@/utils/actions';
+import { fetchAllProducts } from '@/utils/actions/productActions';
 import { Card, CardContent } from '../ui/card';
 import Link from 'next/link';
 import Image from 'next/image';

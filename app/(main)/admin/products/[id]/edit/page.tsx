@@ -13,13 +13,17 @@ import {
   addProductImagesAction,
   addProductVideoAction,
   deleteProductFilesAction,
+  reorderProductMediaAction,
+  updateProductFilesAction,
+} from '@/utils/actions/adminMediaActions';
+import {
   fetchAdminProductDetails,
   fetchAdminProductsForLinking,
-  reorderProductMediaAction,
+} from '@/utils/actions/adminProductQueries';
+import {
   unlinkColorVariantAction,
   updateProductAction,
-  updateProductFilesAction,
-} from '@/utils/actions';
+} from '@/utils/actions/adminProductActions';
 import { Gender, MainCategory, Subcategory } from '@prisma/client';
 
 async function AdminEditProductPage({

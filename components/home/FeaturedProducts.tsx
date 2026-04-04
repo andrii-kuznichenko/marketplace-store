@@ -1,10 +1,8 @@
-import { fetchFeaturedProducts } from '@/utils/actions';
-import React, { Suspense } from 'react';
+import { fetchFeaturedProducts } from '@/utils/actions/productActions';
+import { Suspense } from 'react';
 import EmptyList from '../global/EmptyList';
-import SectionTitle from '../global/SectionTitle';
 import LoadingContainer from '../global/LoadingContainer';
 import ProductsCarousel from '../products/ProductsCarousel';
-import { motion } from 'motion/react';
 import { AnimatedHeading } from '../global/animation/AnimatedHeading';
 
 async function FeaturedProducts() {

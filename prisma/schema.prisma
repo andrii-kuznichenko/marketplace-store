@@ -91,6 +91,7 @@ model Product {
   color        String?
   colorGroup   ColorGroup?          @relation(fields: [colorGroupId], references: [id])
   colorGroupId String?
+  favourites   Favourite[]
   sizes        ProductSize[]
   customFields ProductCustomField[]
   createdAt    DateTime             @default(now())
@@ -120,4 +121,13 @@ model ProductMedia {
   order     Int       @default(0)
   product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
+}
+
+model Favourite {
+  id        String   @id @default(uuid())
+  clerkId   String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

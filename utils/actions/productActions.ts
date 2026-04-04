@@ -1,5 +1,4 @@
-'use server';
-
+'use server'
 import db from '@/utils/db';
 import { pageLinks } from '@/utils/links';
 import { MediaType } from '@prisma/client';

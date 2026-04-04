@@ -6,7 +6,7 @@ import ProductMediaGallery from '@/components/single-product/ProductMediaGallery
 import ColorVariantSelector from '@/components/single-product/ColorVariantSelector';
 import SizeSelector from '@/components/single-product/SizeSelector';
 import ProductDetails from '@/components/single-product/ProductDetails';
-import { fetchSingleProduct } from '@/utils/actions';
+import { fetchSingleProduct } from '@/utils/actions/productActions';
 import { formatCurrency } from '@/utils/format';
 
 async function SingleProductPage({

@@ -8,14 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { deleteProductAction, fetchAdminProducts } from '@/utils/actions';
+import { deleteProductAction } from '@/utils/actions/adminProductActions';
+import { fetchAdminProducts } from '@/utils/actions/adminProductQueries';
 import Link from 'next/link';
 import { pageLinks } from '@/utils/links';
 import { formatCurrency } from '@/utils/format';
 import { IconButton } from '@/components/form/Buttons';
 import FormContainer from '@/components/form/FormContainer';
-import { Button } from '@/components/ui/button';
-import { PiPaletteThin } from "react-icons/pi";
 
 async function AdminProductsPage() {
   const items = await fetchAdminProducts();
@@ -56,10 +55,10 @@ async function AdminProductsPage() {
                   <Link href={`${pageLinks.adminProducts}/${productId}/edit`}>
                     <IconButton actionType='edit' />
                   </Link>
-                  <Link href={`${pageLinks.adminProducts}/create?variantOf=${productId}`}>
-                    <Button size='icon' variant='link' className='p-2 cursor-pointer' title='Add color variant'>
-                      <PiPaletteThin />
-                    </Button>
+                  <Link
+                    href={`${pageLinks.adminProducts}/create?variantOf=${productId}`}
+                  >
+                    <IconButton actionType='color' />
                   </Link>
                   <DeleteProduct productId={productId} />
                 </TableCell>

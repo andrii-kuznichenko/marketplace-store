@@ -5,9 +5,9 @@ import { pageLinks } from '@/utils/links';
 import { MediaType } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { imagesSchema, productSchema, validateWithZodSchema, videoSchema } from './schemas';
-import { uploadFile, deleteFiles } from './supabase';
-import { getMetadata } from './roles';
+import { imagesSchema, productSchema, validateWithZodSchema, videoSchema } from '../schemas';
+import { uploadFile, deleteFiles } from '../supabase';
+import { getMetadata } from '../roles';
 import {
   getAdminUser,
   parseSizes,
@@ -15,53 +15,8 @@ import {
   renderError,
 } from './actionHelpers';
 
-export const fetchAdminProducts = async () => {
-  const user = await getAdminUser();
-  const { role, companyId } = getMetadata(user);
-
-  return db.product.findMany({
-    where: role === 'superadmin' ? {} : { companyId },
-    include: { company: true },
-    orderBy: { createdAt: 'desc' },
-  });
-};
-
-export const fetchAdminProductsForLinking = async (excludeProductId?: string) => {
-  const user = await getAdminUser();
-  const { role, companyId } = getMetadata(user);
-
-  return db.product.findMany({
-    where: {
-      ...(role !== 'superadmin' && { companyId }),
-      ...(excludeProductId && { id: { not: excludeProductId } }),
-    },
-    select: { id: true, name: true, color: true },
-    orderBy: { name: 'asc' },
-  });
-};
-
-export const fetchAdminProductDetails = async (productId: string) => {
-  const user = await getAdminUser();
-  const { role, companyId } = getMetadata(user);
-  const product = await db.product.findUnique({
-    where: { id: productId, ...(role !== 'superadmin' && { companyId }) },
-    include: {
-      media: { orderBy: { order: 'asc' } },
-      sizes: true,
-      customFields: true,
-      colorGroup: {
-        include: {
-          products: { select: { id: true, name: true, color: true } },
-        },
-      },
-    },
-  });
-  if (!product) redirect(pageLinks.adminProducts);
-  return product;
-};
-
 export const createProductAction = async (
-  prevState: any,
+  _prevState: any,
   formData: FormData,
 ): Promise<{ message: string }> => {
   const user = await getAdminUser();
@@ -145,7 +100,7 @@ export const createProductAction = async (
   redirect(pageLinks.adminProducts);
 };
 
-export const updateProductAction = async (prevState: any, formData: FormData) => {
+export const updateProductAction = async (_prevState: any, formData: FormData) => {
   const user = await getAdminUser();
   const { role, companyId } = getMetadata(user);
   const productId = formData.get('id') as string;

@@ -2,7 +2,7 @@
 
 import db from '@/utils/db';
 import { clerkClient } from '@clerk/nextjs/server';
-import { companySchema, validateWithZodSchema } from './schemas';
+import { companySchema, validateWithZodSchema } from '../schemas';
 import { getSuperAdminUser, renderError } from './actionHelpers';
 
 export const createCompanyAction = async (

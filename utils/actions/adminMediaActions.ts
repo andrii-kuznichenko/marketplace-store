@@ -5,9 +5,9 @@ import { pageLinks } from '@/utils/links';
 import { MediaType } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { imagesSchema, validateWithZodSchema, videoSchema } from './schemas';
-import { uploadFile, deleteFiles } from './supabase';
-import { getMetadata } from './roles';
+import { imagesSchema, validateWithZodSchema, videoSchema } from '../schemas';
+import { uploadFile, deleteFiles } from '../supabase';
+import { getMetadata } from '../roles';
 import { getAdminUser, renderError } from './actionHelpers';
 
 export const deleteProductFilesAction = async (

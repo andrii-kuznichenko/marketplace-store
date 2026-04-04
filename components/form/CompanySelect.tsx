@@ -1,5 +1,5 @@
 import { Label } from '../ui/label';
-import { fetchAllCompanies } from '@/utils/actions';
+import { fetchAllCompanies } from '@/utils/actions/productActions';
 
 async function CompanySelect() {
   const companies = await fetchAllCompanies();
