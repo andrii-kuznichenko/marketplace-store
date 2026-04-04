@@ -22,9 +22,9 @@ function ProductDetails({ fields }: { fields: CustomField[] }) {
       </button>
       {open && (
         <div className='mt-4 space-y-2'>
-          {fields.map((f) => (
-            <p key={f.id} className='text-sm'>
-              <span className='font-semibold'>{f.name}:</span> {f.value}
+          {fields.map((field) => (
+            <p key={field.id} className='text-sm'>
+              <span className='font-semibold'>{field.name}:</span> {field.value}
             </p>
           ))}
         </div>
