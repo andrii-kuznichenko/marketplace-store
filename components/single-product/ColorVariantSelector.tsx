@@ -21,12 +21,12 @@ function ColorVariantSelector({
     <div className='mt-4'>
       <p className='font-medium mb-3'>Color</p>
       <div className='flex flex-wrap gap-3'>
-        {variants.map((v) => {
-          const image = v.media[0]?.url;
-          const isActive = v.id === currentProductId;
+        {variants.map((variant) => {
+          const image = variant.media[0]?.url;
+          const isActive = variant.id === currentProductId;
 
           return (
-            <Link key={v.id} href={`/products/${v.id}`}>
+            <Link key={variant.id} href={`/products/${variant.id}`}>
               <div className='flex flex-col items-center gap-1'>
                 <div
                   className={`w-16 h-16 rounded-md overflow-hidden border-2 transition-colors ${
@@ -36,7 +36,7 @@ function ColorVariantSelector({
                   {image ? (
                     <Image
                       src={image}
-                      alt={v.color ?? v.name}
+                      alt={variant.color ?? variant.name}
                       width={64}
                       height={64}
                       className='w-full h-full object-cover'
@@ -46,7 +46,7 @@ function ColorVariantSelector({
                   )}
                 </div>
                 <span className={`text-xs text-center ${isActive ? 'font-medium' : 'text-muted-foreground'}`}>
-                  {v.color ?? '—'}
+                  {variant.color ?? '—'}
                 </span>
               </div>
             </Link>
