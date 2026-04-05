@@ -9,6 +9,10 @@ import ProductDetails from '@/components/single-product/ProductDetails';
 import { fetchSingleProduct } from '@/utils/actions/productActions';
 import { formatCurrency } from '@/utils/format';
 import ShareButton from '@/components/single-product/ShareButton';
+import SubmitReview from '@/components/reviews/SubmitReview';
+import ProductReviews from '@/components/reviews/ProductReviews';
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { findExistingReview } from '@/utils/actions/reviewActions';
 
 async function SingleProductPage({
   params,
@@ -30,6 +34,8 @@ async function SingleProductPage({
   const currencyAmount = formatCurrency(price);
 
   const colorVariants = colorGroup?.products ?? [];
+  const user = await currentUser();
+  const reviewDoesNotExist = user && !(await findExistingReview(user.id, id));
 
   return (
     <section>
@@ -55,14 +61,13 @@ async function SingleProductPage({
             variants={colorVariants}
             currentProductId={id}
           />
-
           <SizeSelector sizes={sizes} />
-
           <AddToCart productId={id} />
-
           <ProductDetails fields={customFields} />
         </div>
       </div>
+      <ProductReviews productId={id} />
+      {reviewDoesNotExist && <SubmitReview productId={id} />}
     </section>
   );
 }

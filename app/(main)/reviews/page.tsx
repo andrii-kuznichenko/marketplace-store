@@ -1,9 +1,43 @@
-import React from 'react'
+import { IconButton } from '@/components/form/Buttons';
+import FormContainer from '@/components/form/FormContainer';
+import SectionTitle from '@/components/global/SectionTitle';
+import ReviewCard from '@/components/reviews/ReviewCard';
+import {
+  deleteReviewAction,
+  fetchProductReviewsByUser,
+} from '@/utils/actions/reviewActions';
 
-function ReviewPage() {
+async function ReviewPage() {
+  const reviews = await fetchProductReviewsByUser();
+
+  if (reviews.length === 0) {
+    return <SectionTitle text='you have no reviews yet' />;
+  }
   return (
-    <div>ReviewPage</div>
-  )
+    <>
+      <SectionTitle text='Your Reviews' />
+      <section className='grid md:grid-cols-2 gap-8 mt-4'>
+        {reviews.map((review) => {
+          const { comment, rating } = review;
+          const { name, media } = review.product;
+          const image = media[0]?.url ?? '';
+          const reviewInfo = { comment, rating, name, image };
+          return <ReviewCard key={review.id} reviewInfo={reviewInfo}>
+            <DeleteReview reviewId={review.id} />
+          </ReviewCard>;
+        })}
+      </section>
+    </>
+  );
 }
 
-export default ReviewPage
+const DeleteReview = ({ reviewId }: { reviewId: string }) => {
+  const deleteReview = deleteReviewAction.bind(null, { reviewId });
+  return (
+    <FormContainer action={deleteReview}>
+      <IconButton actionType='delete' />
+    </FormContainer>
+  );
+};
+
+export default ReviewPage;
