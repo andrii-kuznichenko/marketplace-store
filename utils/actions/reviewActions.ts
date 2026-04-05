@@ -71,6 +71,7 @@ export const fetchProductReviewsByUser = async () => {
       product: {
         select: {
           name: true,
+          id: true,
           media: {
             where: { type: 'IMAGE' },
             select: { url: true },
@@ -98,10 +99,7 @@ export const deleteReviewAction = async (prevState: { reviewId: string }) => {
     return renderError(error);
   }
 };
-export const findExistingReview = async (
-  userId: string,
-  productId: string,
-) => {
+export const findExistingReview = async (userId: string, productId: string) => {
   const product = await db.product.findUnique({
     where: { id: productId },
     select: {
