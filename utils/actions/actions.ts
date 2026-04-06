@@ -3,5 +3,6 @@ export * from './adminProductQueries';
 export * from './adminProductActions';
 export * from './adminMediaActions';
 export * from './companyActions';
-export * from './favouriteActions'
-export * from './reviewActions'
+export * from './favouriteActions';
+export * from './reviewActions';
+export * from './cartActions';

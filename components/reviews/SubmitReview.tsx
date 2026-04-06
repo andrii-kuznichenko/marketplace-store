@@ -10,8 +10,6 @@ import { createReviewAction } from '@/utils/actions/reviewActions';
 import RatingInput from './RatingInput';
 import TextAreaInput from '../form/TextAreaInput';
 import { SubmitButton } from '../form/Buttons';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -36,7 +34,12 @@ function SubmitReview({ productId }: { productId: string }) {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 8, transition: { duration: 0.1 } }}
+            exit={{
+              opacity: 0,
+              scale: 0.95,
+              y: 8,
+              transition: { duration: 0.1 },
+            }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className='mt-8 w-full max-w-2xl'
           >
@@ -44,17 +47,20 @@ function SubmitReview({ productId }: { productId: string }) {
               <FormContainer action={createReviewAction}>
                 <div className='flex flex-col w-full'>
                   <input type='hidden' name='productId' value={productId} />
-                  <input type='hidden' name='authorImageUrl' value={user?.imageUrl} />
+                  <input
+                    type='hidden'
+                    name='authorImageUrl'
+                    value={user?.imageUrl}
+                  />
+                  <input
+                    type='hidden'
+                    name='authorName'
+                    value={user?.username || user?.firstName || 'user'}
+                  />
 
                   <motion.div className='flex justify-center' {...fadeUp(0.1)}>
                     <RatingInput name='rating' />
                   </motion.div>
-
-                  <motion.div {...fadeUp(0.2)}>
-                    <Label className='mb-2'>Write your visible name</Label>
-                    <Input name='authorName' placeholder='Your visible name' className='mb-5' />
-                  </motion.div>
-
 
                   <motion.div {...fadeUp(0.3)}>
                     <TextAreaInput name='comment' label='feedback' />

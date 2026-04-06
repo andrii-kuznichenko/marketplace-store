@@ -3,7 +3,7 @@ export type actionFunction = (
   formData: FormData,
 ) => Promise<{ message: string }>;
 
-export type Cartitem = {
+export type CartItem = {
   productId: string;
   image: string;
   title: string;
@@ -12,8 +12,13 @@ export type Cartitem = {
   company: string;
 };
 
+export type GuestCartItem = {
+  productId: string;
+  amount: number;
+};
+
 export type CartState = {
-  cartItems: Cartitem[];
+  cartItems: CartItem[];
   numItemsInCart: number;
   cartTotal: number;
   shipping: number;

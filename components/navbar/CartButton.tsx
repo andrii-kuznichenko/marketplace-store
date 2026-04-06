@@ -1,27 +1,15 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import { FiShoppingBag } from 'react-icons/fi';
-import { pageLinks } from '@/utils/links';
+import { auth } from '@clerk/nextjs/server';
+import { fetchCartItems } from '@/utils/actions/cartActions';
+import CartButtonClient from './CartButtonClient';
 
 async function CartButton() {
-  //to do
-  const numItemsInCart = 9;
-  return (
-    <Button
-      asChild
-      variant={'outline'}
-      size={'icon'}
-      className='flex justify-center items-center relative'
-    >
-      <Link href={pageLinks.cart}>
-        <FiShoppingBag />
-        <span className='absolute -top-3 -right-3 bg-primary text-white rounded-full h-6 w-6 flex items-center justify-center text-xs'>
-          {numItemsInCart}
-        </span>
-      </Link>
-    </Button>
-  );
+  const { userId } = await auth();
+
+  if (userId) {
+    const numItemsInCart = await fetchCartItems();
+    return <CartButtonClient numItemsInCart={numItemsInCart} />;
+  }
+  return <CartButtonClient />;
 }
 
 export default CartButton;

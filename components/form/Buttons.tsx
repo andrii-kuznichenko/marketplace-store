@@ -113,3 +113,4 @@ export const CardSubmitButton = ({ isFavourite }: { isFavourite: boolean }) => {
     </Button>
   );
 };
+

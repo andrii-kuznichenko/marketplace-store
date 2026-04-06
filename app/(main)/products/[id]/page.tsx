@@ -62,8 +62,8 @@ async function SingleProductPage({
             currentProductId={id}
           />
           <SizeSelector sizes={sizes} />
-          <AddToCart productId={id} />
           <ProductDetails fields={customFields} />
+          <AddToCart productId={id} />
         </div>
       </div>
       <ProductReviews productId={id} />
