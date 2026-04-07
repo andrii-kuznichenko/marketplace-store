@@ -11,7 +11,7 @@ import { formatCurrency } from '@/utils/format';
 import ShareButton from '@/components/single-product/ShareButton';
 import SubmitReview from '@/components/reviews/SubmitReview';
 import ProductReviews from '@/components/reviews/ProductReviews';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import {  currentUser } from '@clerk/nextjs/server';
 import { findExistingReview } from '@/utils/actions/reviewActions';
 
 async function SingleProductPage({

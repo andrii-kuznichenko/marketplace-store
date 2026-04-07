@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import Navbar from '@/components/navbar/Navbar';
 import { ClerkProvider } from '@clerk/nextjs';
 import Providers from './providers';
+import CartSyncer from '@/components/cart/CartSyncer';
 import NavbarWithReveal from '@/components/home/animated/NavbarWithReveal';
 import { PropsWithChildren } from 'react';
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: HomeLayoutProps) {
       >
         <body>
           <Providers>
+            <CartSyncer />
             <NavbarWithReveal>
               <Navbar />
             </NavbarWithReveal>

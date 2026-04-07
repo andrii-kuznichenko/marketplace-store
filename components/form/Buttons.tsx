@@ -8,6 +8,7 @@ import { CiEdit, CiEraser } from 'react-icons/ci';
 import { PiPaletteThin } from 'react-icons/pi';
 import { SignInDialog } from '../auth-form/SignInDialog';
 import { IoIosHeartEmpty, IoIosHeart } from 'react-icons/io';
+import { RxCross1 } from "react-icons/rx";
 import { useState } from 'react';
 
 type btnSize = 'default' | 'lg' | 'sm';
@@ -16,18 +17,20 @@ type SubmitButtonProps = {
   className?: string;
   text?: string;
   size?: btnSize;
+  disabled?: boolean;
 };
 
 export function SubmitButton({
   className = '',
   text = 'submit',
   size = 'lg',
+  disabled = false,
 }: SubmitButtonProps) {
   const { pending } = useFormStatus();
   return (
     <Button
       type='submit'
-      disabled={pending}
+      disabled={pending || disabled}
       className={cn('capitalize', className)}
       size={size}
     >
@@ -42,7 +45,7 @@ export function SubmitButton({
   );
 }
 
-type actionType = 'edit' | 'delete' | 'color';
+type actionType = 'edit' | 'delete' | 'color' | 'deleteCart';
 
 export const IconButton = ({ actionType }: { actionType: actionType }) => {
   const { pending } = useFormStatus();
@@ -55,6 +58,8 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
         return <CiEraser />;
       case 'color':
         return <PiPaletteThin />;
+      case 'deleteCart':
+        return <RxCross1 />
       default:
         const never: never = actionType;
         throw new Error(`Invalid action type: ${never}`);

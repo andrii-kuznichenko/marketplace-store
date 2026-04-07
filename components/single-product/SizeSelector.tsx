@@ -1,13 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useTransition, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LoaderCircle } from 'lucide-react';
 
 type Size = { id: string; size: string; inStock: boolean };
 
 function SizeSelector({ sizes }: { sizes: Size[] }) {
-  const [selected, setSelected] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selected = searchParams.get('size');
+  const [isPending, startTransition] = useTransition();
+  const [pendingSize, setPendingSize] = useState<string | null>(null);
 
   if (sizes.length === 0) return null;
+
+  const handleSelect = (size: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('size', size);
+    setPendingSize(size);
+    startTransition(() => {
+      router.push(`?${params.toString()}`, { scroll: false });
+    });
+  };
 
   return (
     <div className='mt-4'>
@@ -15,22 +30,27 @@ function SizeSelector({ sizes }: { sizes: Size[] }) {
         Size{selected ? `: ${selected}` : ''}
       </p>
       <div className='flex flex-wrap gap-2'>
-        {sizes.map((s) => (
+        {sizes.map((size) => (
           <button
-            key={s.id}
+            key={size.id}
             type='button'
-            disabled={!s.inStock}
-            onClick={() => s.inStock && setSelected(s.size)}
+            disabled={!size.inStock || isPending}
+            onClick={() => size.inStock && handleSelect(size.size)}
             className={[
-              'px-4 py-2 rounded-md border text-sm font-medium transition-colors',
-              !s.inStock && 'border-border text-muted-foreground line-through cursor-not-allowed opacity-50',
-              s.inStock && selected === s.size && 'border-primary bg-primary text-primary-foreground',
-              s.inStock && selected !== s.size && 'border-border hover:border-foreground',
+              'relative px-4 py-2 rounded-md border text-sm font-medium transition-colors',
+              !size.inStock && 'border-border text-muted-foreground line-through cursor-not-allowed opacity-50',
+              size.inStock && selected === size.size && 'border-primary bg-primary text-primary-foreground',
+              size.inStock && selected !== size.size && 'border-border hover:border-foreground',
+              isPending && pendingSize === size.size && 'opacity-70',
             ]
               .filter(Boolean)
               .join(' ')}
           >
-            {s.size}
+            {isPending && pendingSize === size.size ? (
+              <LoaderCircle className='h-4 w-4 animate-spin' />
+            ) : (
+              size.size
+            )}
           </button>
         ))}
       </div>

@@ -152,11 +152,11 @@ model Cart {
   clerkId        String
   cartItems      CartItem[]
   numItemsInCart Int        @default(0)
-  cartTotal      Int        @default(0)
-  shipping       Int        @default(5)
-  tax            Int        @default(0)
+  cartTotal      Float      @default(0)
+  shipping       Float      @default(5)
+  tax            Float      @default(0)
   taxRate        Float      @default(0.19)
-  orderTotal     Int        @default(0)
+  orderTotal     Float      @default(0)
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 }
@@ -168,6 +168,8 @@ model CartItem {
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId    String
   amount    Int
+  size      String
+  color     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -17,7 +17,6 @@ function SelectProductAmount(props: SelectProductAmountProps) {
 
   return (
     <>
-      <h4 className='mb-2'>Amount: </h4>
       <Select
         defaultValue={amount.toString()}
         onValueChange={(value) => setAmount(Number(value))}
