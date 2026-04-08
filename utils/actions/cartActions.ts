@@ -36,6 +36,7 @@ const includeProductClause = {
       product: {
         include: {
           company: true,
+          sizes: true,
           media: {
             where: { type: MediaType.IMAGE },
             orderBy: { order: 'asc' as const },
@@ -126,6 +127,7 @@ export const updateCart = async (cart: Cart) => {
       product: {
         include: {
           company: true,
+          sizes: true,
           media: {
             where: { type: MediaType.IMAGE },
             orderBy: { order: 'asc' as const },
@@ -142,8 +144,12 @@ export const updateCart = async (cart: Cart) => {
   let cartTotal = 0;
 
   for (const item of cartItems) {
-    numItemsInCart += item.amount;
-    cartTotal += item.amount * item.product.price;
+    const sizeEntry = item.product.sizes.find((s) => s.size === item.size);
+    const inStock = sizeEntry?.inStock ?? true;
+    if (inStock) {
+      numItemsInCart += item.amount;
+      cartTotal += item.amount * item.product.price;
+    }
   }
 
   const tax = cartTotal * cart.taxRate;
@@ -224,6 +230,7 @@ export const fetchProductsByIds = async (productIds: string[]) => {
       name: true,
       color: true,
       company: { select: { name: true } },
+      sizes: { select: { size: true, inStock: true } },
       media: {
         where: { type: MediaType.IMAGE },
         orderBy: { order: 'asc' as const },

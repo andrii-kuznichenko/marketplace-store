@@ -31,7 +31,9 @@ function GuestCart() {
       let cartTotal = 0;
       for (const item of items) {
         const product = fetched.find((p) => p.id === item.productId);
-        if (product) cartTotal += product.price * item.amount;
+        if (!product) continue;
+        const sizeEntry = product.sizes.find((sizeEntry) => sizeEntry.size === item.size);
+        if (sizeEntry?.inStock ?? true) cartTotal += product.price * item.amount;
       }
       const tax = cartTotal * TAX_RATE;
       const shipping = cartTotal ? SHIPPING : 0;

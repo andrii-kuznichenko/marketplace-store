@@ -34,6 +34,7 @@ export type CartItemWithProduct = Prisma.CartItemGetPayload<{
     product: {
       include: {
         company: true;
+        sizes: true;
         media: true;
       };
     };

@@ -13,12 +13,11 @@ function CartSyncer() {
   useEffect(() => {
     if (isSignedIn === undefined) return;
 
-    // signed in (either just logged in or already was on page load) + has guest items → merge
+    
     if (isSignedIn && items.length > 0) {
       mergeGuestCartAction(items).then(() => clearCart());
     }
 
-    // signed out → clear local cart
     if (!isSignedIn && prevSignedIn.current === true) {
       clearCart();
     }

@@ -191,3 +191,12 @@
   80% { transform: translateX(1px) rotate(4deg); }
   100% { transform: translateX(0) rotate(0deg); }
 }
+
+
+@keyframes delete-hover {
+  to { transform: rotate(-40deg); }
+}
+
+.delete-btn-icon:hover {
+  animation: delete-hover 0.25s ease forwards;
+}
