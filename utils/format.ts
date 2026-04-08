@@ -7,3 +7,11 @@ export const formatCurrency = (amount: number | null) => {
 };
 
 export const currency = '€';
+
+export const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+};

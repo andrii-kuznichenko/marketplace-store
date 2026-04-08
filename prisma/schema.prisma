@@ -58,6 +58,7 @@ model Company {
   name      String    @unique
   admins    Admin[]
   products  Product[]
+  parcels   Parcel[]
   createdAt DateTime  @default(now())
 }
 
@@ -96,6 +97,7 @@ model Product {
   customFields ProductCustomField[]
   reviews      Review[]
   cartItems    CartItem[]
+  orderItems   OrderItem[]
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt
 }
@@ -172,4 +174,56 @@ model CartItem {
   color     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  clerkId    String
+  name       String
+  street     String
+  city       String
+  postalCode String
+  country    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  clerkId        String
+  parcels        Parcel[]
+  orderItems     OrderItem[]
+  orderTotal     Float       @default(0)
+  shipping       Float       @default(0)
+  email          String
+  isPaid         Boolean     @default(false)
+  recipientName  String
+  street         String
+  city           String
+  postalCode     String
+  country        String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Parcel {
+  id          String   @id @default(uuid())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  company     Company  @relation(fields: [companyId], references: [id])
+  companyId   String
+  isDelivered Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  amount    Int
+  size      String
+  color     String
+  price     Float
 }

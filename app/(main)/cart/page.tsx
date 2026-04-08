@@ -4,6 +4,8 @@ import { auth } from '@clerk/nextjs/server';
 import GuestCart from '@/components/cart/GuestCart';
 import CartTotals from '@/components/cart/CartTotals';
 import CartItemsList from '@/components/cart/CartItemsList';
+import DeliveryAddress from '@/components/cart/DeliveryAddress';
+import { fetchUserAddresses } from '@/utils/actions/addressActions';
 
 async function CartPage() {
   const { userId } = await auth();
@@ -11,9 +13,12 @@ async function CartPage() {
   if (!userId) return <GuestCart />;
 
   const previousCart = await fetchOrCreateCart({ userId });
-  const {currentCart, cartItems} = await updateCart(previousCart);
+  const { currentCart, cartItems } = await updateCart(previousCart);
 
   if (cartItems.length === 0) return <SectionTitle text='Empty Cart' />;
+
+  const addresses = await fetchUserAddresses();
+  const savedAddress = addresses[0] ?? null;
 
   return (
     <>
@@ -23,6 +28,7 @@ async function CartPage() {
           <CartItemsList cartItems={cartItems} />
         </div>
         <div className='lg:col-span-4'>
+          <DeliveryAddress savedAddress={savedAddress} />
           <CartTotals cart={currentCart} />
         </div>
       </div>

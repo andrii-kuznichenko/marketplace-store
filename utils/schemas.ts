@@ -90,6 +90,14 @@ export const reviewSchema = z.object({
     ),
 }); 
 
+export const addressSchema = z.object({
+  name: z.string().min(2, { error: 'Name must be at least 2 characters.' }).max(100),
+  street: z.string().min(2, { error: 'Street is required.' }).max(200),
+  city: z.string().min(2, { error: 'City is required.' }).max(100),
+  postalCode: z.string().min(2, { error: 'Postal code is required.' }).max(20),
+  country: z.string().min(2, { error: 'Country is required.' }).max(100),
+});
+
 export function validateWithZodSchema<T>(schema: ZodType<T>, data: unknown): T {
   const result = schema.safeParse(data);
   if (!result.success) {
