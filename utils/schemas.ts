@@ -85,7 +85,7 @@ export const reviewSchema = z.object({
     .min(10, { error: 'Comment must be at least 10 characters long' })
     .max(1000, { error: 'Comment must be at most 1000 characters long' })
     .refine(
-      (value) => !checkProfanity(value, { allLanguages: true }).containsProfanity,
+      (value) => checkProfanity(value, { allLanguages: true }).containsProfanity,
       { message: 'The comment contains inappropriate words.' },
     ),
 }); 
