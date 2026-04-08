@@ -1,6 +1,5 @@
 import { z, ZodType } from 'zod';
 import { Gender, MainCategory, Subcategory } from '@prisma/client';
-import { checkProfanity } from 'glin-profanity';
 
 export const productSchema = z.object({
   name: z
@@ -16,7 +15,7 @@ export const productSchema = z.object({
       const wordCount = description.split(' ').length;
       return wordCount >= 10 && wordCount <= 1000;
     },
-    { error: 'description must be between 10 and 1000 words.' },
+    { error: 'description must be between 10 and 1000 words. first library' },
   ),
   featured: z.coerce.boolean(),
   gender: z.enum(Gender, { error: 'Gender is required' }),
@@ -84,10 +83,6 @@ export const reviewSchema = z.object({
     .string()
     .min(10, { error: 'Comment must be at least 10 characters long' })
     .max(1000, { error: 'Comment must be at most 1000 characters long' })
-    .refine(
-      (value) => checkProfanity(value, { allLanguages: true }).containsProfanity,
-      { message: 'The comment contains inappropriate words.' },
-    ),
 }); 
 
 export const addressSchema = z.object({
