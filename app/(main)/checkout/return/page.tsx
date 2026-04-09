@@ -42,7 +42,6 @@ export default async function Return({
 
   return (
     <div className='max-w-4xl mx-auto px-4 py-16 space-y-16'>
-      {/* Success */}
       <div className='flex flex-col items-center text-center gap-4'>
         <CheckCircle2 className='text-green-500 w-24 h-24' strokeWidth={1.5} />
         <h1 className='text-3xl font-semibold'>Order confirmed!</h1>
@@ -55,7 +54,6 @@ export default async function Return({
         </p>
       </div>
 
-      {/* Ordered items */}
       {order && order.orderItems.length > 0 && (
         <div className='space-y-4'>
           <h2 className='text-xl font-medium'>Your order</h2>
