@@ -18,13 +18,11 @@ export default function Checkout() {
   const orderId = searchParams.get('orderId');
   const cartId = searchParams.get('cartId');
   return (
-    <div id='checkout'>
-      <EmbeddedCheckoutProvider
-        stripe={stripePromise}
-        options={{ fetchClientSecret: () => fetchClientSecret({ orderId: orderId!, cartId: cartId! }) }}
-      >
-        <EmbeddedCheckout />
-      </EmbeddedCheckoutProvider>
-    </div>
+    <EmbeddedCheckoutProvider
+      stripe={stripePromise}
+      options={{ fetchClientSecret: () => fetchClientSecret({ orderId: orderId!, cartId: cartId! }) }}
+    >
+      <EmbeddedCheckout />
+    </EmbeddedCheckoutProvider>
   );
 }

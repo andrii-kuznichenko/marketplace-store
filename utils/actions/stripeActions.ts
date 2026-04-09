@@ -71,10 +71,16 @@ export async function fetchClientSecret({
     // Create Checkout Sessions from body params.
     const session = await stripe.checkout.sessions.create({
       ui_mode: 'embedded_page',
+      payment_method_types: ['card'],
       metadata: { orderId, cartId },
       line_items: line_items,
       mode: 'payment',
       return_url: `${origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`,
+      branding_settings: {
+        button_color: '#7c22d8',
+        border_style: 'rectangular',
+        font_family: 'inter',
+      },
     });
 
     if (!session.client_secret)

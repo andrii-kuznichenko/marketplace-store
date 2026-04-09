@@ -18,14 +18,20 @@ export default function Page() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div id='checkout'>
-      <div className='mb-8 border'>
+    <div>
+      <Suspense>
+        <Checkout />
+      </Suspense>
+      <div className='mt-6 bg-muted/50 border border-dashed'>
         <button
           type='button'
           onClick={() => setOpen(!open)}
           className='flex items-center justify-between w-full px-4 py-3'
         >
-          <span className='font-semibold text-lg'>Test card numbers</span>
+          <div className='flex items-center gap-2'>
+            <span className='text-xs font-mono bg-yellow-400 text-yellow-900 px-2 py-0.5'>TEST MODE</span>
+            <span className='font-medium'>Test card numbers</span>
+          </div>
           <motion.div
             animate={{ rotate: open ? 0 : 180 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
@@ -66,9 +72,6 @@ export default function Page() {
           )}
         </AnimatePresence>
       </div>
-      <Suspense>
-        <Checkout />
-      </Suspense>
     </div>
   );
 }
