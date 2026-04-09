@@ -58,3 +58,6 @@ npm
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+#stripe
+public/stripe.exe
