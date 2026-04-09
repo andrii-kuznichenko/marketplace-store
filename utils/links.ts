@@ -23,6 +23,8 @@ export const pageLinks = {
   favourites: '/favourites',
   orders: '/orders',
   reviews: '/reviews',
+  checkout: '/checkout',
+  checkoutReturn:'/checkout/return',
   adminSales: '/admin/sales',
   adminProducts: '/admin/products',
   adminCreateProduct: '/admin/products/create',

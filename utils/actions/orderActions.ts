@@ -13,24 +13,38 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { pageLinks } from '../links';
 
-export const createOrderAction = async (prevState: any, _formData: FormData) => {
+export const createOrderAction = async (
+  prevState: any,
+  _formData: FormData,
+) => {
   const user = await getAuthUser();
+  let orderId: null | string = null;
+  let cartId: null | string = null;
   try {
     const cart = await fetchOrCreateCart({
       userId: user.id,
       errorOnFailure: true,
     });
-
+    cartId = cart.id;
     const address = await db.address.findFirst({
       where: { clerkId: user.id },
       orderBy: { createdAt: 'desc' },
     });
-    if (!address) throw new Error('Please add a delivery address before placing an order.');
+    if (!address)
+      throw new Error('Please add a delivery address before placing an order.');
 
-    // Group cart items by companyId to create one parcel per company
-    const companyIds = [...new Set(cart.cartItems.map((item) => item.product.companyId))];
+    const companyIds = [
+      ...new Set(cart.cartItems.map((item) => item.product.companyId)),
+    ];
 
-    await db.order.create({
+    await db.order.deleteMany({
+      where: {
+        clerkId: user.id,
+        isPaid: false,
+      },
+    });
+
+    const order = await db.order.create({
       data: {
         clerkId: user.id,
         orderTotal: cart.orderTotal,
@@ -41,7 +55,6 @@ export const createOrderAction = async (prevState: any, _formData: FormData) => 
         city: address.city,
         postalCode: address.postalCode,
         country: address.country,
-        isPaid: true, // TODO: remove when payment system is integrated
         parcels: {
           create: companyIds.map((companyId) => ({ companyId })),
         },
@@ -56,12 +69,11 @@ export const createOrderAction = async (prevState: any, _formData: FormData) => 
         },
       },
     });
-    await db.cartItem.deleteMany({ where: { cartId: cart.id } });
-    await db.cart.delete({ where: { id: cart.id } });
+    orderId = order.id;
   } catch (error) {
     return renderError(error);
   }
-  redirect(pageLinks.orders);
+  redirect(`${pageLinks.checkout}?orderId=${orderId}&cartId=${cartId}`);
 };
 
 export const fetchUserOrders = async () => {
@@ -228,7 +240,10 @@ export const fetchCompanyOrders = async () => {
   return Array.from(ordersMap.values());
 };
 
-export const markParcelDeliveredAction = async (_prevState: any, formData: FormData) => {
+export const markParcelDeliveredAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
   await getAdminUser();
   const parcelId = formData.get('parcelId') as string;
   try {
