@@ -6,6 +6,8 @@ import CartTotals from '@/components/cart/CartTotals';
 import CartItemsList from '@/components/cart/CartItemsList';
 import DeliveryAddress from '@/components/cart/DeliveryAddress';
 import { fetchUserAddresses } from '@/utils/actions/addressActions';
+import { fetchRelatedProducts } from '@/utils/actions/productActions';
+import ProductsCarousel from '@/components/products/ProductsCarousel';
 
 async function CartPage() {
   const { userId } = await auth();
@@ -17,7 +19,10 @@ async function CartPage() {
 
   if (cartItems.length === 0) return <SectionTitle text='Empty Cart' />;
 
-  const addresses = await fetchUserAddresses();
+  const [addresses, relatedProducts] = await Promise.all([
+    fetchUserAddresses(),
+    fetchRelatedProducts({ cartId: currentCart.id }),
+  ]);
   const savedAddress = addresses[0] ?? null;
 
   return (
@@ -32,6 +37,12 @@ async function CartPage() {
           <CartTotals cart={currentCart} />
         </div>
       </div>
+      {relatedProducts.length > 0 && (
+        <div className='mt-16 space-y-4'>
+          <h2 className='text-xl font-medium'>You might also like</h2>
+          <ProductsCarousel products={relatedProducts} />
+        </div>
+      )}
     </>
   );
 }
