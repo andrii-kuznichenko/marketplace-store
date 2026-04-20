@@ -5,11 +5,11 @@ function OrderSkeleton() {
   return (
     <div>
       <div className='flex items-center justify-between py-4'>
-        <Skeleton className='h-4 w-64' />
-        <Skeleton className='h-4 w-24' />
+        <Skeleton className='h-4 w-40 sm:w-64' />
+        <Skeleton className='h-4 w-16 sm:w-24' />
       </div>
       <Separator />
-      <div className='flex gap-8 py-4'>
+      <div className='flex flex-wrap gap-x-8 gap-y-3 py-4'>
         <div className='space-y-2'>
           <Skeleton className='h-4 w-20' />
           <Skeleton className='h-4 w-28' />

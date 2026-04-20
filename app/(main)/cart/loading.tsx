@@ -2,23 +2,23 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function CartItemSkeleton() {
   return (
-    <div className='flex gap-4 p-4 border rounded-lg'>
-      {/* Image */}
-      <Skeleton className='w-32 h-40 rounded shrink-0' />
-      {/* Info */}
-      <div className='flex flex-col gap-2 flex-1'>
-        <Skeleton className='h-4 w-24' />
-        <Skeleton className='h-5 w-48' />
-        <Skeleton className='h-5 w-24 mt-1' />
-        <Skeleton className='h-4 w-28' />
-        <Skeleton className='h-4 w-28' />
-        <Skeleton className='h-4 w-36 mt-2' />
+    <div className='relative flex flex-col gap-y-4 md:flex-row md:flex-wrap md:items-start md:justify-between p-6 mb-8 border rounded-lg gap-x-4'>
+      {/* Image + info row */}
+      <div className='flex gap-x-4'>
+        <Skeleton className='w-24 sm:w-32 shrink-0 aspect-3/4 rounded' />
+        <div className='flex flex-col gap-2'>
+          <Skeleton className='h-3 w-16' />
+          <Skeleton className='h-4 w-32' />
+          <Skeleton className='h-5 w-20 mt-2' />
+          <Skeleton className='h-3 w-24 mt-2' />
+          <Skeleton className='h-3 w-24' />
+          <Skeleton className='h-3 w-28 mt-2' />
+        </div>
       </div>
-      {/* Quantity + delete */}
-      <div className='flex flex-col items-end gap-2'>
-        <Skeleton className='h-9 w-24 rounded' />
-        <Skeleton className='h-6 w-6 rounded' />
-      </div>
+      {/* Quantity selector */}
+      <Skeleton className='h-9 w-28 rounded md:ml-8' />
+      {/* Delete button — absolute on mobile, static on md+ */}
+      <Skeleton className='absolute top-2 right-3 md:static h-8 w-8 rounded' />
     </div>
   );
 }
@@ -26,20 +26,17 @@ function CartItemSkeleton() {
 function loading() {
   return (
     <>
-      {/* Title */}
       <Skeleton className='h-9 w-48 mb-8' />
       <Skeleton className='h-px w-full mb-8' />
 
       <div className='mt-8 grid gap-4 lg:grid-cols-12'>
-        {/* Left: cart items */}
         <div className='lg:col-span-8 space-y-4'>
           <CartItemSkeleton />
           <CartItemSkeleton />
         </div>
 
-        {/* Right: delivery address + totals */}
         <div className='lg:col-span-4'>
-          {/* Delivery address card */}
+          {/* Delivery address */}
           <div className='border rounded-xl p-6 mb-4'>
             <div className='flex items-center justify-between mb-3'>
               <div className='flex items-center gap-2'>
@@ -50,13 +47,13 @@ function loading() {
             </div>
             <div className='space-y-1.5'>
               <Skeleton className='h-4 w-40' />
-              <Skeleton className='h-4 w-52' />
+              <Skeleton className='h-4 w-full sm:w-52' />
               <Skeleton className='h-4 w-36' />
               <Skeleton className='h-4 w-24' />
             </div>
           </div>
 
-          {/* Totals card */}
+          {/* Totals */}
           <div className='border rounded-xl p-8'>
             <div className='flex justify-between mb-2'>
               <Skeleton className='h-4 w-16' />
@@ -79,7 +76,6 @@ function loading() {
             </div>
           </div>
 
-          {/* Place Order button */}
           <Skeleton className='h-11 w-full mt-8 rounded-md' />
         </div>
       </div>

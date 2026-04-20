@@ -3,6 +3,9 @@ import { Geist, Geist_Mono, Inter, Lora, Roboto } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import Navbar from '@/components/navbar/Navbar';
+import MobileTopBar from '@/components/navbar/mobile/MobileTopBar';
+import MobileBottomBar from '@/components/navbar/mobile/MobileBottomBar';
+import MobileBottomBarReveal from '@/components/navbar/mobile/MobileBottomBarReveal';
 import { ClerkProvider } from '@clerk/nextjs';
 import Providers from './providers';
 import CartSyncer from '@/components/cart/CartSyncer';
@@ -55,8 +58,13 @@ export default function RootLayout({ children }: HomeLayoutProps) {
             <CartSyncer />
             <NavbarWithReveal>
               <Navbar />
+              <MobileTopBar />
             </NavbarWithReveal>
+            <MobileBottomBarReveal>
+              <MobileBottomBar />
+            </MobileBottomBarReveal>
             {children}
+            <div aria-hidden className='h-16 md:hidden' />
           </Providers>
         </body>
       </html>

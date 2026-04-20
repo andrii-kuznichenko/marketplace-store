@@ -13,7 +13,7 @@ export default function OrderProductItem({ item }: { item: OrderItem }) {
   return (
     <div className='flex flex-col gap-1'>
       <div className='relative aspect-2/3 bg-muted rounded overflow-hidden'>
-        <Link href={`${pageLinks.products}/${item.product.id}`}>
+        <Link href={`${pageLinks.products}/${item.product.id}`} className='absolute inset-0'>
           {image ? (
             <Image
               src={image}
