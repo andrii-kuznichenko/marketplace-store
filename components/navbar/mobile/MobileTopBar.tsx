@@ -1,19 +1,25 @@
-import NavSearch from '../NavSearch';
+import { Suspense } from 'react';
 import DarkMode from '../DarkMode';
 import Logo from '../Logo';
-import { Suspense } from 'react';
+import NavSearch from '../NavSearch';
+import MobileSidebar from './MobileSidebar';
+import MobileCartButton from './MobileCartButton';
 
 function MobileTopBar() {
   return (
     <nav className='md:hidden border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80'>
-      <div className='flex items-center gap-3 px-4 py-3'>
+      <div className='flex items-center justify-between px-4 py-3'>
         <Logo />
-        <div className='flex-1'>
-          <Suspense>
-            <NavSearch />
-          </Suspense>
+        <div className='flex items-center gap-2'>
+          <DarkMode />
+          <MobileCartButton />
+          <MobileSidebar />
         </div>
-        <DarkMode />
+      </div>
+      <div className='flex justify-center px-4 pb-3'>
+        <Suspense>
+          <NavSearch />
+        </Suspense>
       </div>
     </nav>
   );

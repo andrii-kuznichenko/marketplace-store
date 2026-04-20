@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { FiShoppingBag } from 'react-icons/fi';
 import { pageLinks } from '@/utils/links';
 import { useCartStore } from '@/utils/store/cartStore';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 function MobileCartButtonClient({ numItemsInCart }: { numItemsInCart?: number }) {
   const guestCount = useCartStore((s) => s.numItemsInCart);
@@ -12,11 +14,11 @@ function MobileCartButtonClient({ numItemsInCart }: { numItemsInCart?: number })
   return (
     <Link
       href={pageLinks.cart}
-      className='relative flex flex-col items-center gap-0.5 text-xs text-foreground'
+      className={cn(buttonVariants({ variant: 'outline', size: 'icon' }), 'relative h-10 w-10')}
+      aria-label='Cart'
     >
-      <FiShoppingBag size={22} />
-      <span>Cart</span>
-      <span className='absolute -top-1 -right-2 bg-primary text-white rounded-full h-4 w-4 flex items-center justify-center text-[10px] leading-none'>
+      <FiShoppingBag size={20} />
+      <span className='absolute -top-3 -right-3 bg-primary text-white rounded-full h-6 w-6 flex items-center justify-center text-xs'>
         {count}
       </span>
     </Link>

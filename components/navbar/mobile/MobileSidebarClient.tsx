@@ -41,14 +41,9 @@ function MobileSidebarClient({ userIcon }: Props) {
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className='flex flex-col items-center gap-0.5 text-xs text-foreground'
-        aria-label='Open menu'
-      >
+      <Button variant='outline' size='icon' className='h-10 w-10' onClick={() => setOpen(true)} aria-label='Open menu'>
         <LuMenu size={22} />
-        <span>Menu</span>
-      </button>
+      </Button>
 
       {mounted && createPortal(
         <>

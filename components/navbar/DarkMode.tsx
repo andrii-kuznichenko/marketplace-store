@@ -23,6 +23,7 @@ export default function ModeToggle() {
     <Button
       variant='outline'
       size='icon'
+      className='md:h-9 md:w-9 h-10 w-10'
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
       <SunIconAnimation isDark={isDark}>

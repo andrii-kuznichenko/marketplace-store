@@ -27,11 +27,11 @@ function ProductVerticalCard({ product }: { product: Product }) {
             />
           </div>
           <div className='mt-4 flex flex-1 flex-col'>
-            <div className='flex justify-between mt-4 mb-1'>
-              <h2 className='font-light'>{company.name}</h2>
+            <div className='mt-4 mb-1'>
               <ProductRating productId={product.id} isReviewShown={false} />
+              <h2 className='font-light text-sm md:text-base'>{company.name}</h2>
             </div>
-            <h3 className='min-h-14 text-lg capitalize'>{name}</h3>
+            <h3 className='min-h-14 text-base md:text-lg capitalize'>{name}</h3>
             <p className='text-muted-foreground mt-2'>{currencyAmount} </p>
           </div>
         </CardContent>

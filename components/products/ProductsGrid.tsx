@@ -12,7 +12,7 @@ function ProductsGrid({ products }: { products: Product[] }) {
         const productId = product.id;
         return (
           <AnimatedGridItem key={productId}>
-            <div className='absolute top-10 right-6 z-5'>
+            <div className='absolute top-3 right-2 md:top-10 md:right-6 z-5'>
               <FavouriteToggleButton productId={productId} />
             </div>
             <ProductVerticalCard product={product} />
